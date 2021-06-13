@@ -6,30 +6,27 @@
 
 ```JavaScript
 git clone https://github.com/Voyzz/smart-home-mini-program.git
+
+npm install
+
+工具->构建npm
 ```
 
-### 微信小程序
+### 文档
 
-- 编译命令
+- [微信小程序](https://developers.weixin.qq.com/miniprogram/dev/framework/)
+- [UI库: vant](https://youzan.github.io/vant-weapp/#/home)
+
+### UI组件
+
+- 引入示例
 
 ```JavaScript
-# yarn
-$ yarn dev:weapp
-$ yarn build:weapp
+// app.json
+"usingComponents": {
+  "van-button": "@vant/weapp/button/index"
+}
 
-# npm script
-$ npm run dev:weapp
-$ npm run build:weapp
-
-# 仅限全局安装
-$ taro build --type weapp --watch
-$ taro build --type weapp
-
-# npx 用户也可以使用
-$ npx taro build --type weapp --watch
-$ npx taro build --type weapp
-
-# watch 同时开启压缩
-$ set NODE_ENV=production && taro build --type weapp --watch # Windows
-$ NODE_ENV=production taro build --type weapp --watch # Mac
+// *.wxml
+<van-button type="default">默认按钮</van-button>
 ```
