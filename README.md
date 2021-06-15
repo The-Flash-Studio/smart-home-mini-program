@@ -5,7 +5,7 @@
 ### 下载项目
 
 ```JavaScript
-git clone https://github.com/Voyzz/smart-home-mini-program.git
+git clone https://github.com/The-Flash-Studio/smart-home-mini-program.git
 
 npm install
 
