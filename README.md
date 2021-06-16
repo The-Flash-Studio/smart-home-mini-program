@@ -32,5 +32,5 @@ npm install
 ```
 
 ### 参考UI
-<img src="https://lg-7pc5j6x4-1257302752.cos.ap-shanghai.myqcloud.com/WechatIMG1188.jpeg" width = "500" height = "800" alt="米家1" />
-<img src="https://lg-7pc5j6x4-1257302752.cos.ap-shanghai.myqcloud.com/WechatIMG1187.jpeg" width = "500" height = "800" alt="米家2" />
+<img src="https://lg-7pc5j6x4-1257302752.cos.ap-shanghai.myqcloud.com/WechatIMG1188.jpeg" width = "400" height = "800" alt="米家1" />
+<img src="https://lg-7pc5j6x4-1257302752.cos.ap-shanghai.myqcloud.com/WechatIMG1187.jpeg" width = "400" height = "800" alt="米家2" />
