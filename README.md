@@ -32,4 +32,4 @@ npm install
 ```
 
 ### 参考UI
-![米家1](https://lg-7pc5j6x4-1257302752.cos.ap-shanghai.myqcloud.com/WechatIMG1188.jpeg)
+![米家1](https://lg-7pc5j6x4-1257302752.cos.ap-shanghai.myqcloud.com/WechatIMG1188.jpeg =400x300)
