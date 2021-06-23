@@ -1,3 +1,8 @@
+/********* common *********/
+.common_bg_color {
+  background-color: #e9eff3;
+}
+
 /********* iconFont *********/
 @font-face {
   font-family: 'iconfont';

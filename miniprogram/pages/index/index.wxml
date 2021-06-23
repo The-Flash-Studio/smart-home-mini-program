@@ -1,10 +1,12 @@
 <!--index.wxml-->
-<view class="tab_box">
-  <van-tabs active="{{ active }}" bind:change="onChange">
-    <van-tab title="标签 1">内容 1</van-tab>
+<view class="tab_box common_bg_color">
+  <view style="height:30%"></view>
+  <van-tabs active="{{ active }}" bind:change="onChange" custom-class="tabs_container" animated>
+    <van-tab title="标签 1">
+      <text class="iconfont icon-kaiguan" style="font-size:50px;color:red"></text>
+    </van-tab>
     <van-tab title="标签 2">内容 2</van-tab>
     <van-tab title="标签 3">内容 3</van-tab>
     <van-tab title="标签 4">内容 4</van-tab>
   </van-tabs>
-  <text class="iconfont icon-kaiguan" style="font-size:50px;color:red"></text>
 </view>

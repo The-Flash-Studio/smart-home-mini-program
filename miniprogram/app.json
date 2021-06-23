@@ -5,8 +5,8 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarBackgroundColor": "#ffffff00",
+    "navigationBarTitleText": "智能家庭",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

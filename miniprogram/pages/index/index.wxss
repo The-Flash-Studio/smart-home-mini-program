@@ -3,3 +3,6 @@
   width: 750rpx;
   height: 100vh;
 }
+.tabs_container{
+  height: 70vh;
+}
