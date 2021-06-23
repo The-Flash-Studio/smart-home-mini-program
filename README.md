@@ -31,6 +31,20 @@ npm install
 <van-button type="default">默认按钮</van-button>
 ```
 
+### iconfont
+
+- 引入示例
+
+```JavaScript
+// *.wxml
+<text class="iconfont icon-kaiguan" style="font-size:50px;color:red"></text>
+```
+
+- class of icon
+
+![参照表](https://lg-7pc5j6x4-1257302752.cos.ap-shanghai.myqcloud.com/iconfont.png)
+
 ### 参考UI
+
 <img src="https://lg-7pc5j6x4-1257302752.cos.ap-shanghai.myqcloud.com/WechatIMG1188.jpeg" width = "400" height = "800" alt="米家1" />
 <img src="https://lg-7pc5j6x4-1257302752.cos.ap-shanghai.myqcloud.com/WechatIMG1187.jpeg" width = "400" height = "800" alt="米家2" />

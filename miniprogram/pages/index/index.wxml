@@ -6,4 +6,5 @@
     <van-tab title="标签 3">内容 3</van-tab>
     <van-tab title="标签 4">内容 4</van-tab>
   </van-tabs>
+  <text class="iconfont icon-kaiguan" style="font-size:50px;color:red"></text>
 </view>
