@@ -1,4 +1,5 @@
 <template name="index_header">
   <view class="index_header_container">
+    <view class="header_title_box">智能家庭</view>
   </view>
 </template>

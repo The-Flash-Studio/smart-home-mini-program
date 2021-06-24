@@ -6,14 +6,23 @@
     active="{{ active }}"
     bind:change="onChange"
     custom-class="tabs_container"
+    tab-active-class="tab-active-class"
+    tab-class="tab-class"
     animated="true"
     swipeable="true"
+    swipe-threshold="4"
+    lazy-render="true"
     >
-    <van-tab title="标签 1">
-      <view class="common_border_shadow">hhh</view>
-    </van-tab>
-    <van-tab title="标签 2">内容 2</van-tab>
-    <van-tab title="标签 3">内容 3</van-tab>
-    <van-tab title="标签 4">内容 4</van-tab>
+    <block wx:for="{{sceneList}}" wx:for-item="tab_item" wx:for-index="tab_idx" wx:key="tab_idx">
+      <van-tab title="{{tab_item.name}}">
+        <view class="tab_content_container">
+          <block wx:for="{{tab_item.equipmentList}}" wx:key="index">
+            <view class="equp_card_box common_shadow">
+              {{item.name}}
+            </view>
+          </block>
+        </view>
+      </van-tab>
+    </block>
   </van-tabs>
 </view>

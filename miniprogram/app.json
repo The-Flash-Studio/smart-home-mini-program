@@ -1,7 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/scene/scene",
+    "pages/mine/mine"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -13,15 +15,21 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "页面1",
+        "text": "主页",
         "iconPath": "/assets/icon/home_off.png",
         "selectedIconPath": "/assets/icon/home_on.png"
       },
       {
-        "pagePath": "pages/logs/logs",
-        "text": "页面2",
+        "pagePath": "pages/scene/scene",
+        "text": "场景",
         "iconPath": "/assets/icon/intro_off.png",
         "selectedIconPath": "/assets/icon/intro_on.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "/assets/icon/mine_off.png",
+        "selectedIconPath": "/assets/icon/mine_on.png"
       }
     ]
   },
