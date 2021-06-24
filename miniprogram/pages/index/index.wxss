@@ -1,8 +1,15 @@
-/**index.wxss**/
+
 .tab_box{
   width: 750rpx;
   height: 100vh;
 }
 .tabs_container{
   height: 70vh;
+}
+
+/** Header **/
+.index_header_container{
+  width: 750rpx;
+  height: 30vh;
+  background-color: transparent;
 }

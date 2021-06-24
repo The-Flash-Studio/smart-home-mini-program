@@ -1,9 +1,16 @@
-<!--index.wxml-->
+<import src="./templates/header.wxml"></import>
+
 <view class="tab_box common_bg_color">
-  <view style="height:30%"></view>
-  <van-tabs active="{{ active }}" bind:change="onChange" custom-class="tabs_container" animated>
+  <template is="index_header"></template>
+  <van-tabs 
+    active="{{ active }}"
+    bind:change="onChange"
+    custom-class="tabs_container"
+    animated="true"
+    swipeable="true"
+    >
     <van-tab title="标签 1">
-      <text class="iconfont icon-kaiguan" style="font-size:50px;color:red"></text>
+      <view class="common_border_shadow">hhh</view>
     </van-tab>
     <van-tab title="标签 2">内容 2</van-tab>
     <van-tab title="标签 3">内容 3</van-tab>

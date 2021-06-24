@@ -1,0 +1,4 @@
+<template name="index_header">
+  <view class="index_header_container">
+  </view>
+</template>
