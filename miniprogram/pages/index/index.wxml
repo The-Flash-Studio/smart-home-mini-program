@@ -1,11 +1,13 @@
 <import src="./templates/header.wxml"></import>
+<import src="./templates/cardItem.wxml"></import>
 
 <view class="tab_box common_bg_color">
-  <template is="index_header"></template>
+  <template is="index_header" />
+  <view class="extra_line" />
   <van-tabs 
     active="{{ active }}"
     bind:change="onChange"
-    custom-class="tabs_container"
+    custom-class="tabs_container common_shadow"
     tab-active-class="tab-active-class"
     tab-class="tab-class"
     animated="true"
@@ -17,9 +19,7 @@
       <van-tab title="{{tab_item.name}}">
         <view class="tab_content_container">
           <block wx:for="{{tab_item.equipmentList}}" wx:key="index">
-            <view class="equp_card_box common_shadow">
-              {{item.name}}
-            </view>
+            <template is="cardItem" data="{{...item}}"/>
           </block>
         </view>
       </van-tab>

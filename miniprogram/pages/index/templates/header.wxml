@@ -1,6 +1,17 @@
 <template name="index_header">
   <view class="index_header_container">
-    <text class="header_title_box">智能家庭</text>
-    <text class="iconfont icon-jiantou" style="font-size:10px"></text>
+    <image mode="aspectFill" src="https://lg-7pc5j6x4-1257302752.cos.ap-shanghai.myqcloud.com/Jietu20210701-160807.png" class="bg_img" />
+    <view class="header_title_box flex_row_start_center">
+      <view class="title_box flex_row_space">
+        <text class="title_text">智能家庭</text>
+        <text class="iconfont icon-jiantou" style="font-size:10px"></text>
+      </view>
+      <view class="icon_box flex_row_center">
+        <van-icon name="plus" size="20"/>
+      </view>
+      <view class="icon_box flex_row_center">
+        <van-icon name="volume-o" size="20"/>
+      </view>
+    </view>
   </view>
 </template>

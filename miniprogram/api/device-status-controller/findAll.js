@@ -2,7 +2,7 @@ export default function findAll(openid){
   const res = {}
   res.sceneList = [
     {
-      positon:'common',
+      position:'common',
       name:'常用',
       equipmentList:[
         {
@@ -41,10 +41,40 @@ export default function findAll(openid){
           img:'',
           linkType:1
         },
+        {
+          name:'智能空气净化器',
+          position:'卧室',
+          img:'',
+          linkType:1
+        },
+        {
+          name:'智能空气净化器',
+          position:'卧室',
+          img:'',
+          linkType:1
+        },
+        {
+          name:'智能空气净化器',
+          position:'卧室',
+          img:'',
+          linkType:1
+        },
+        {
+          name:'智能空气净化器',
+          position:'卧室',
+          img:'',
+          linkType:1
+        },
+        {
+          name:'智能空气净化器',
+          position:'卧室',
+          img:'',
+          linkType:1
+        },
       ]
     },
     {
-      positon:'livingroom',
+      position:'livingroom',
       name:'客厅',
       equipmentList:[
         {
@@ -80,7 +110,7 @@ export default function findAll(openid){
       ]
     },
     {
-      positon:'bedroom',
+      position:'bedroom',
       name:'卧室',
       equipmentList:[
         {
@@ -92,7 +122,7 @@ export default function findAll(openid){
       ]
     },
     {
-      positon:'canteen',
+      position:'canteen',
       name:'餐厅',
       equipmentList:[
         {
@@ -104,7 +134,7 @@ export default function findAll(openid){
       ]
     },
     {
-      positon:'restroom',
+      position:'restroom',
       name:'卫生间',
       equipmentList:[
         {
