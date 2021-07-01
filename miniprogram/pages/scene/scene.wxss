@@ -1,1 +1,50 @@
 /* miniprogram/pages/scene/scene.wxss */
+
+/* tab_style */
+
+.tab_box {
+  width: 750rpx;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.scene_type {
+  font-size: 30px !important;
+  color: rebeccapurple;
+}
+
+.scene_item_container {
+  width: auto;
+  height: 180rpx;
+  margin: 30rpx 30rpx;
+  border-radius: 12px;
+  background-color: #f2f5fc;
+}
+
+.scene_title {
+  font-weight: bold;
+  font-size: 14px !important;
+}
+
+.scene_label {
+  font-size: 12px !important;
+  color: gray;
+  font-weight: normal;
+}
+
+.scene_icon {
+  margin-right: 10px;
+}
+
+.scene_right_text {
+  font-size: 12px !important;
+  color: #47b0b8;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.bg_corner {
+  padding: 5rpx 20rpx;
+  border-radius: 12px;
+  background-color: #e3f5f5;
+}

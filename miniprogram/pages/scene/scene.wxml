@@ -1,2 +1,53 @@
 <!--miniprogram/pages/scene/scene.wxml-->
-<text>miniprogram/pages/scene/scene.wxml</text>
+
+<view class="tab_box">
+
+  <block
+    wx:for="{{sceneTypeList}}"
+    wx:for-item="tab_item"
+    wx:for-index="tab_idx"
+    wx:key="tab_idx"
+  >
+    <van-cell-group
+      title="{{tab_item.name}}"
+      custom-class="scene_type"
+      border="{{false}}"
+    >
+      <block wx:for="{{tab_item.sceneList}}" wx:key="index">
+        <van-cell
+          title="{{item.name}}"
+          link-type="navigateTo"
+          url="/pages/index/index"
+          center
+          size="large"
+          custom-class="scene_item_container common_shadow"
+          title-class="scene_title"
+          use-label-slot="true"
+        >
+          <van-icon
+            custom-class="scene_icon"
+            slot="icon"
+            name="chat"
+            color="red"
+            size="28px"
+          />
+          <view slot="label" class="scene_label">{{item.description}}</view>
+
+          <view slot="right-icon" bindtap="gotoSceneDetail">
+            <block wx:if="{{item.hasSet}}">
+              <text class="scene_right_text bg_corner">执行</text>
+            </block>
+            <block wx:else>
+              <text class="scene_right_text">去开启</text>
+            </block>
+            <van-icon name="arrow" color="gray" />
+          </view>
+
+        </van-cell>
+      </block>
+    </van-cell-group>
+
+  </block>
+
+</view>
+
