@@ -42,7 +42,9 @@ npm install
 
 - class of icon
 
+![参照表](https://lg-7pc5j6x4-1257302752.cos.ap-shanghai.myqcloud.com/samrt-icon-list.png)
 ![参照表](https://lg-7pc5j6x4-1257302752.cos.ap-shanghai.myqcloud.com/iconfont.png)
+
 
 ### 参考UI
 
