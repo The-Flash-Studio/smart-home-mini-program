@@ -13,6 +13,10 @@ Page({
         // 存在Token
         if(user_token){
             console.log('token:',user_token)
+            getUserDeviceInfo().then(e=>{
+                _this.setData(e)
+                console.log(e.sceneList);
+            })
             queryHouseByUser({
                 'token':user_token
             },{},(res)=>{
@@ -26,10 +30,6 @@ Page({
                 success: function (res) {
                     const userCode = res.code;
                     app.userCode = userCode;
-                    getUserDeviceInfo(userCode).then(e=>{
-                        _this.setData(e)
-                        console.log(e.sceneList);
-                    })
                     // 微信登录
                     wechatLogin({
                         params:userCode
