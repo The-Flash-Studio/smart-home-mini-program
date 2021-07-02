@@ -1,0 +1,6 @@
+<view class="page_box">
+  <text >{{sceneName}} </text>
+  <text >{{sceneType}} </text>
+  <text >{{hasSet}} </text>
+</view>
+

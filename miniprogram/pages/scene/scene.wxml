@@ -10,19 +10,20 @@
   >
     <van-cell-group
       title="{{tab_item.name}}"
-      custom-class="scene_type"
+      custom-class="scene_group_container"
       border="{{false}}"
     >
       <block wx:for="{{tab_item.sceneList}}" wx:key="index">
         <van-cell
           title="{{item.name}}"
-          link-type="navigateTo"
-          url="/pages/index/index"
           center
+          clickable
           size="large"
-          custom-class="scene_item_container common_shadow"
+          custom-class="scene_item_container common_shadow2"
           title-class="scene_title"
           use-label-slot="true"
+          bind:click="executeScene"
+          data-item="{{item}}"
         >
           <van-icon
             custom-class="scene_icon"
@@ -33,7 +34,11 @@
           />
           <view slot="label" class="scene_label">{{item.description}}</view>
 
-          <view slot="right-icon" bindtap="gotoSceneDetail">
+          <view
+            slot="right-icon"
+            catchtap="gotoSceneDetail"
+            data-item="{{item}}"
+          >
             <block wx:if="{{item.hasSet}}">
               <text class="scene_right_text bg_corner">执行</text>
             </block>
