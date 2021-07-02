@@ -3,22 +3,22 @@
 /* tab_style */
 
 .tab_box {
-  width: 750rpx;
+  width: 100vw;
   height: 100vh;
-  flex-direction: column;
 }
 
 .scene_type {
   font-size: 30px !important;
-  color: rebeccapurple;
 }
 
+.scene_group_container {
+  margin-left: 15px;
+  margin-right: 15px;
+}
 .scene_item_container {
-  width: auto;
   height: 180rpx;
-  margin: 30rpx 30rpx;
   border-radius: 12px;
-  background-color: #f2f5fc;
+  margin-top: 25rpx;
 }
 
 .scene_title {

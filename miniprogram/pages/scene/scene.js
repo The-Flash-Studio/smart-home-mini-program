@@ -16,11 +16,11 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
 
     const _this = this;
     wx.login({
-      success: function(res) {
+      success: function (res) {
         const openid = res.code;
         app.openid = openid;
         getAllConfigScenes(openid).then(e => {
@@ -32,60 +32,75 @@ Page({
 
   },
 
-  gotoSceneDetail: function(e) {
-    console.log("---------------------asdfasdfasdfsdf")
-    // wx.navigateTo({
-    //   url: "pages/index/index"
-    // })
+  gotoSceneDetail: function (e) {
+    console.log("gotoSceneDetail")
+    let sceneName = e.currentTarget.dataset.item.name
+    let sceneType = e.currentTarget.dataset.item.sceneType
+    let hasSet = e.currentTarget.dataset.item.hasSet == true
+    wx.navigateTo({
+      url: "detail/detail?sceneName=" + sceneName + "&sceneType=" + sceneType + "&hasSet=" + hasSet
+    })
 
   },
+
+  executeScene: function (e) {
+    console.log("executeScene")
+    let sceneName = e.currentTarget.dataset.item.name
+    let sceneType = e.currentTarget.dataset.item.sceneType
+    let hasSet = e.currentTarget.dataset.item.hasSet == true
+    wx.navigateTo({
+      url: "detail/detail?sceneName=" + sceneName + "&sceneType=" + sceneType + "&hasSet=" + hasSet
+    })
+
+  },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   }
 })
