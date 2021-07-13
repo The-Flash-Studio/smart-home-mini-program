@@ -1,9 +1,13 @@
 <import src="./templates/header.wxml"></import>
 <import src="./templates/cardItem.wxml"></import>
+<import src="./templates/addDevice.wxml"></import>
 
 <view class="tab_box common_bg_color">
+  <!-- Header -->
   <template is="index_header" />
   <view class="extra_line" />
+
+  <!-- Tabs -->
   <van-tabs 
     active="{{ active }}"
     bind:change="onChange"
@@ -25,4 +29,17 @@
       </van-tab>
     </block>
   </van-tabs>
+
+  <!-- PopUp -->
+  <van-popup 
+    show="{{ showPopup }}"
+    bind:close="onPopupClose"
+    position="bottom"
+    round="true"
+    >
+    内容
+  </van-popup>
+  <!-- <template is="addDevice" data="{{addDeviceData}}"/> -->
 </view>
+
+

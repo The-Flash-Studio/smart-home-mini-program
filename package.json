@@ -10,7 +10,7 @@
   "author": "",
   "license": "",
   "devDependencies": {
-    "miniprogram-api-typings": "^3.3.2",
+    "miniprogram-api-typings": "^3.4.1",
     "typescript": "^3.3.3333"
   },
   "dependencies": {

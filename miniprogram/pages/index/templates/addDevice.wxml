@@ -1,0 +1,5 @@
+<template name="addDevice">
+  <van-popup show="{{ showAddDevice }}" bind:close="onCloseAddDevice">
+    内容
+  </van-popup>
+</template>

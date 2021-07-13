@@ -6,7 +6,7 @@
         <text class="title_text">智能家庭</text>
         <text class="iconfont icon-jiantou" style="font-size:10px"></text>
       </view>
-      <view class="icon_box flex_row_center">
+      <view class="icon_box flex_row_center" bindtap="clickToAddDevice">
         <van-icon name="plus" size="20"/>
       </view>
       <view class="icon_box flex_row_center">
