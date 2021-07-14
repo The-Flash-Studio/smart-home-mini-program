@@ -1,4 +1,4 @@
-export default function findAll(openid){
+export default function getUserDeviceInfo(openid){
   const res = {}
   res.sceneList = [
     {

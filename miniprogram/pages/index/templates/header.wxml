@@ -2,8 +2,8 @@
   <view class="index_header_container">
     <image mode="aspectFill" src="https://lg-7pc5j6x4-1257302752.cos.ap-shanghai.myqcloud.com/Jietu20210701-160807.png" class="bg_img" />
     <view class="header_title_box flex_row_start_center">
-      <view class="title_box flex_row_space">
-        <text class="title_text">智能家庭</text>
+      <view class="title_box flex_row_space" bindtap="onPopupOpen">
+        <text class="title_text text_overflow_one">{{currHouseData.name}}</text>
         <text class="iconfont icon-jiantou" style="font-size:10px"></text>
       </view>
       <view class="icon_box flex_row_center" bindtap="clickToAddDevice">

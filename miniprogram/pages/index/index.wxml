@@ -1,10 +1,10 @@
 <import src="./templates/header.wxml"></import>
 <import src="./templates/cardItem.wxml"></import>
-<import src="./templates/addDevice.wxml"></import>
+<import src="./templates/changeHouse.wxml"></import>
 
 <view class="tab_box common_bg_color">
   <!-- Header -->
-  <template is="index_header" />
+  <template is="index_header" data="{{currHouseData}}"/>
   <view class="extra_line" />
 
   <!-- Tabs -->
@@ -19,7 +19,7 @@
     swipe-threshold="4"
     lazy-render="true"
     >
-    <block wx:for="{{sceneList}}" wx:for-item="tab_item" wx:for-index="tab_idx" wx:key="tab_idx">
+    <block wx:for="{{roomList}}" wx:for-item="tab_item" wx:for-index="tab_idx" wx:key="tab_idx">
       <van-tab title="{{tab_item.name}}">
         <view class="tab_content_container">
           <block wx:for="{{tab_item.equipmentList}}" wx:key="index">
@@ -37,9 +37,8 @@
     position="bottom"
     round="true"
     >
-    内容
+    <template is="changeHouse" data="{{houseNameList}}"/>
   </van-popup>
-  <!-- <template is="addDevice" data="{{addDeviceData}}"/> -->
 </view>
 
 

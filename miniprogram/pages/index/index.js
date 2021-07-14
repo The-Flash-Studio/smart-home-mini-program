@@ -1,11 +1,15 @@
 "use strict";
 var app = getApp();
-import {getUserDeviceInfo,wechatLogin,queryHouseByUser} from '../../api/index'
+import {getUserDeviceInfo,wechatLogin,houseQueryAll,roomQueryAll,gatewayQueryAll} from '../../api/index'
 
 Page({
     data: {
-        sceneList:[],
-        showPopup:false
+        userId:null,
+        houseList:[],
+        houseNameList:[],
+        currHouseData:null,
+        roomList:[],
+        showPopup:false,
     }, 
     onLoad: function () {
         let _this = this,
@@ -14,15 +18,7 @@ Page({
         // 存在Token
         if(user_token){
             // console.log('token:',user_token)
-            getUserDeviceInfo().then(e=>{
-                _this.setData(e)
-                console.log(e.sceneList);
-            })
-            queryHouseByUser({
-                'token':user_token
-            },{},(res)=>{
-                console.log(res)
-            })
+            _this.fetchData()
         }
         // 不存在Token
         else{
@@ -40,11 +36,58 @@ Page({
                             key:"user_token",
                             data:_token
                         })
+                        _this.fetchData()
                     })
                 }
             });
         }
     },  
+
+    fetchData: function(house_id){
+        let _this = this
+
+        // getUserDeviceInfo().then(e=>{
+        //     _this.setData(e)
+        //     console.log(e.sceneList);
+        // })
+
+        // 当前房子集合（用于测试）
+        houseQueryAll((e)=>{
+            const data = e.data.data;
+            const {houseList,userId} = data
+
+            let curr_house_id = house_id ? house_id : wx.getStorageSync('curr_house_id');
+            if(!curr_house_id || house_id){
+                curr_house_id = house_id ? house_id : houseList[0].id
+                wx.setStorage({
+                    key:"curr_house_id",
+                    data:curr_house_id
+                })
+            }
+            const currHouseData = houseList.filter(e=>e.id===curr_house_id)[0];
+            const houseNameList = houseList.map(e=>e.name)
+
+            this.setData({
+                houseList,
+                userId,
+                currHouseData,
+                houseNameList
+            })
+            console.log(currHouseData)
+            
+            // 当前房间集合（用于测试）
+            roomQueryAll((e)=>{
+                const data = e.data.data;
+                const {roomList} = data;
+                _this.setData({roomList})
+
+                // 当前网关组（用于集合）
+                gatewayQueryAll((e)=>{
+                    console.log(e)
+                })
+            })
+        })
+    },
 
     // 切换标签
     onChange: function (e) {
@@ -57,9 +100,21 @@ Page({
                 console.log(res)
             }
         })
-        // this.setData({
-        //     showPopup:true
-        // })
+    },
+
+    // 切换房子
+    onHounseChange:function(e){
+        const changedHouseInfo = this.data.houseList[e.detail.index]
+        const {id} = changedHouseInfo;
+        this.fetchData(id);
+        this.onPopupClose()
+    },
+
+    // 打开popup
+    onPopupOpen:function(){
+        this.setData({
+            showPopup:true
+        })
     },
 
     // 关闭popup

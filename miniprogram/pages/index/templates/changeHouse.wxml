@@ -1,0 +1,9 @@
+<template name="changeHouse">
+    <van-picker
+        show-toolbar
+        title="切换房子"
+        columns="{{ houseNameList }}"
+        bind:cancel="onPopupClose"
+        bind:confirm="onHounseChange"
+    />
+</template>
