@@ -1,6 +1,6 @@
 "use strict";
 var app = getApp();
-import {getUserDeviceInfo,wechatLogin,houseQueryAll,roomQueryAll,gatewayQueryAll} from '../../api/index'
+import {getUserDeviceInfo,wechatLogin,houseQueryAll,roomQueryAll,gatewayQueryAll,queryDevicesByGatewayId} from '../../api/index'
 
 Page({
     data: {
@@ -9,6 +9,8 @@ Page({
         houseNameList:[],
         currHouseData:null,
         roomList:[],
+        gatewayList:[],
+        currGateway:null,
         showPopup:false,
     }, 
     onLoad: function () {
@@ -73,17 +75,23 @@ Page({
                 currHouseData,
                 houseNameList
             })
-            console.log(currHouseData)
             
-            // 当前房间集合（用于测试）
-            roomQueryAll((e)=>{
-                const data = e.data.data;
-                const {roomList} = data;
-                _this.setData({roomList})
+            // // 当前房间集合（用于测试）
+            // roomQueryAll((e)=>{
+            //     const data = e.data.data;
+            //     const {roomList} = data;
+            //     _this.setData({roomList})
+            // })
 
-                // 当前网关组（用于集合）
-                gatewayQueryAll((e)=>{
-                    console.log(e)
+            // 当前网关组（用于测试）
+            gatewayQueryAll((e)=>{
+                const data = e.data.data;
+                const {gatewayList} = data;
+                const {id} = gatewayList[0]
+                queryDevicesByGatewayId({
+                    params:id
+                },(res)=>{
+                    _this.setData({gatewayList})
                 })
             })
         })
@@ -91,6 +99,15 @@ Page({
 
     // 切换标签
     onChange: function (e) {
+        const index = e.detail.index;
+        const data = this.data.gatewayList[index];
+        const {id} = data;
+
+        queryDevicesByGatewayId({
+            params:id
+        },(res)=>{
+            console.log(res)
+        })
     },
 
     // 添加设备
