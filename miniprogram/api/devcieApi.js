@@ -1,5 +1,6 @@
 "use strict";
 // import baseUrl from './config'
+import commonRequestFunction from './index'
 let baseUrl = 'http://10.32.33.151:5388/'
 let app = getApp();
 /**
@@ -8,118 +9,29 @@ let app = getApp();
  * @param {*} successCallback 
  * @param {*} failCallback 
  */
-
 export function deleteDeviceById(deviceId = -1, successCallback, failCallback) {
   console.log("deleteDeviceById-> " + requestObj)
-  wx.request({
-    url: baseUrl + 'smart-iot/device/remove',
-    header: { token: app.token },
-    data: { params, deviceId },
-    method: 'post',
-    success(data) {
-      console.log(data)
-      if (data.data.status.code == 200) {
-
-        successCallback && successCallback(data.data.data)
-      } else {
-        failCallback && failCallback(data.data)
-      }
-    },
-    fail(error) {
-      console.log(error)
-      failCallback && failCallback(error)
-    }
-  })
+  commonRequestFunction('smart-iot/device/remove', { deviceId }, successCallback, failCallback)
 }
+
 export function updateDeviceInfo(requestObj = {}, successCallback, failCallback) {
   console.log("updateDeviceInfo-> " + requestObj)
-  wx.request({
-    url: baseUrl + 'smart-iot/device/update',
-    header: { token: app.token },
-    data: Object.assign({ head: {} }, requestObj),
-    method: 'post',
-    success(data) {
-      console.log(data)
-      if (data.data.status.code == 200) {
-
-        successCallback && successCallback(data.data.data)
-      } else {
-        failCallback && failCallback(data.data)
-      }
-    },
-    fail(error) {
-      console.log(error)
-      failCallback && failCallback(error)
-    }
-  })
+  commonRequestFunction('smart-iot/device/update', requestObj, successCallback, failCallback)
 }
+
 export function getAllDevicesByGateway(requestObj = {}, successCallback, failCallback) {
   console.log("getAllDevicesByGateway-> " + requestObj)
-  wx.request({
-    url: baseUrl + 'smart-iot/device/queryDevicesByGatewayId',
-    header: { token: app.token },
-    data: Object.assign({ head: {} }, requestObj),
-    method: 'post',
-    success(data) {
-      console.log(data)
-      if (data.data.status.code == 200) {
-
-        successCallback && successCallback(data.data.data)
-      } else {
-        failCallback && failCallback(data.data)
-      }
-    },
-    fail(error) {
-      console.log(error)
-      failCallback && failCallback(error)
-    }
-  })
+  commonRequestFunction('smart-iot/device/queryDevicesByGatewayId', requestObj, successCallback, failCallback)
 }
 
 export function getDeviceStatus(requestObj = {}, successCallback, failCallback) {
   console.log("getDeviceStatus-> " + requestObj)
-
-  wx.request({
-    url: baseUrl + 'smart-iot/device/findStatusByDeviceId',
-    header: { token: app.token },
-    data: Object.assign({ head: {} }, requestObj),
-    method: 'post',
-    success(data) {
-      console.log(data)
-      if (data.data.status.code == 200) {
-
-        successCallback && successCallback(data.data.data)
-      } else {
-        failCallback && failCallback(data.data)
-      }
-    },
-    fail(error) {
-      console.log(error)
-      failCallback && failCallback(error)
-    }
-  })
+  commonRequestFunction('smart-iot/device/findStatusByDeviceId', requestObj, successCallback, failCallback)
 }
+
 export function getDeviceById(requestObj = {}, successCallback, failCallback) {
   console.log("getDeviceById-> " + requestObj)
-  wx.request({
-    url: baseUrl + 'smart-iot/device/findById',
-    header: { token: app.token },
-    data: Object.assign({ head: {} }, requestObj),
-    method: 'post',
-    success(data) {
-      console.log(data)
-      if (data.data.status.code == 200) {
-
-        successCallback && successCallback(data.data.data)
-      } else {
-        failCallback && failCallback(data.data)
-      }
-    },
-    fail(error) {
-      console.log(error)
-      failCallback && failCallback(error)
-    }
-  })
+  commonRequestFunction('smart-iot/device/findById', requestObj, successCallback, failCallback)
 }
 
 /**

@@ -1,7 +1,7 @@
 // miniprogram/pages/scene/scene.js
 var app = getApp();
 import {
-  addGateWay, queryGateWaryByHouseId, queryGatewayById, removeGateway, prepareDevice, addDevice
+  addGateWay, queryGateWaryByHouseId, queryGatewayById, removeGateway, prepareDevice, addDevice, queryDevicesByGatewayId
 } from '../../api/gatewayApi';
 import {
   addHouse, queryHouseByUser, removeHouse
@@ -18,17 +18,18 @@ Page({
    */
   data: {
     houseList: [],
-    sceneTypeList: []
+    sceneTypeList: [],
+    inputHouseName: "AAA",
+    inputHouseAddress: "BBBB",
+    showHouseAddDialog: false,
+    showHouseChangeDialog: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-
     const _this = this;
-
     let user_token = wx.getStorageSync('user_token');
 
     // 存在Token
@@ -54,9 +55,9 @@ Page({
             const { data: _token } = res.data;
             !!_token && wx.setStorage({
               key: "user_token",
-              data: _token
+              data: _token.token
             })
-            app.token = _token
+            app.token = _token.token
             console.log('token From Server:', _token)
             _this.loginSuccessAction(_token)
           })
@@ -70,9 +71,11 @@ Page({
     getAllMockDevices(user_token).then(e => {
       this.setData(e)
     })
+    console.log("loginSuccessAction token-> ", app.token.token)
     wx.connectSocket({
-      url: "ws://10.32.33.151:5388/smart-iot/webSocket/" + app.token
+      url: "ws://10.32.33.151:5388/smart-iot/webSocket/" + app.token.token
     })
+
     wx.onSocketOpen(function (res) {
       console.log("onSocketOpen " + res)
     })
@@ -96,7 +99,6 @@ Page({
         houseList: data.houseList
 
       })
-      console.log("queryHouseByUser userId ->" + app.userId)
       console.log("queryHouseByUser houseList -> " + app.houseList)
     }, (error) => {
       console.log("error->" + error.status.code + " - " + error.status.message)
@@ -114,7 +116,7 @@ Page({
     })
   },
   doAddDevice() {
-    addDevice((data) => {
+    addDevice({}, (data) => {
       console.log(data)
     }, (error) => {
       console.log(error)
@@ -127,7 +129,7 @@ Page({
     let sceneType = e.currentTarget.dataset.item.sceneType
     let hasSet = e.currentTarget.dataset.item.hasSet == true
     wx.navigateTo({
-      url: "detail/detail?sceneName=" + sceneName + "&sceneType=" + sceneType + "&hasSet=" + hasSet
+      url: "../device/device?sceneName=" + sceneName + "&sceneType=" + sceneType + "&hasSet=" + hasSet
     })
 
   },
@@ -138,7 +140,7 @@ Page({
     let sceneType = e.currentTarget.dataset.item.sceneType
     let hasSet = e.currentTarget.dataset.item.hasSet == true
     wx.navigateTo({
-      url: "detail/detail?sceneName=" + sceneName + "&sceneType=" + sceneType + "&hasSet=" + hasSet
+      url: "../device/device?sceneName=" + sceneName + "&sceneType=" + sceneType + "&hasSet=" + hasSet
     })
 
   },
@@ -149,19 +151,53 @@ Page({
 
   onTitleAdd: function (event) {
     console.log(app.houseList)
+    this.setData({
+      showHouseAddDialog: true
+    })
+  },
+  onEditHouseName: function (event) {
+    this.setData({
+      inputHouseName: event.detail
+    })
+  },
+  onEditHouseAddress: function (event) {
+    this.setData({
+      inputHouseAddress: event.detail
+    })
+  },
+
+  doHouseAddRequest: function (event) {
+    console.log("添加前", this.data.inputHouseName)
     if (app.houseList) {
       console.log("执行添加house")
       addHouse({
-        'address': "长征路21号",
-        'name': "新家",
-        'userId': app.userId
+        'userId': app.userId,
+        'name': this.data.inputHouseName,
+        'address': this.data.inputHouseAddress,
       }, (data) => {
-        console.log("doAddHouse result ->" + data)
+        app.houseList.push({
+          id: data.id,
+          name: data.name,
+          address: data.address,
+          userId: data.userId,
+        })
+        console.log(app.houseList)
+        wx.showToast({
+          title: '添加成功',
+          icon: ''
+        })
+        this.setData({
+          inputHouseName: "",
+          inputHouseAddress: "",
+        })
       }, (error) => {
         console.log("error->" + error.status.code + " - " + error.status.message)
       })
     } else {
-      console.log("未获取houseList")
+      wx.showToast({
+        title: '未获取houseList',
+        icon: ''
+      })
     }
   },
 
@@ -220,6 +256,14 @@ Page({
     })
   },
 
+  queryDevicesByGatewayId: function (event) {
+    queryDevicesByGatewayId(30, (data) => {
+      console.log("queryDevicesByGatewayId result ->" + data)
+    }, (error) => {
+      console.log("error->" + error.status.code + " - " + error.status.message)
+    })
+  },
+
   doAddGateway: function (event) {
     console.log("doAddGateway")
     if (!app.houseList) {
@@ -259,25 +303,15 @@ Page({
       })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  bindHouseList: function () {
+    if (!app.houseList) {
+      return []
+    }
+    let houseNameList = []
+    for (let index = 0; index < app.houseList.length; index++) {
+      const houseInfo = app.houseList[index];
+      houseNameList.push(houseInfo.name)
+    }
   },
 
   /**
@@ -290,24 +324,4 @@ Page({
     wx.closeSocket()
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

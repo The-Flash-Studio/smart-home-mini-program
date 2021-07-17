@@ -1,4 +1,3 @@
-/* miniprogram/pages/scene/scene.wxss */
 @import "./templates/header.wxss";
 /* tab_style */
 .tab_box {
