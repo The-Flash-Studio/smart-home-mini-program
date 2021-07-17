@@ -2,6 +2,7 @@
 // import baseUrl from './config'
 let baseUrl = 'http://10.32.33.151:5388/'
 let app = getApp();
+import commonRequestFunction from "./index"
 
 /**
  * prepare收到消息后，添加设备 - 未测试
@@ -9,24 +10,7 @@ let app = getApp();
  * @param {*} failCallback 
  */
  export function addDevice(successCallback, failCallback) {
-  wx.request({
-    url: baseUrl + 'smart-iot/gateway/addDevice',
-    header: { token: app.token },
-    data: { params: {} },
-    method: 'post',
-    success(data) {
-      console.log(data)
-      if (data.data.status.code == 200) {
-        successCallback && successCallback(data.data.data)
-      } else {
-        failCallback && failCallback(data.data)
-      }
-    },
-    fail(error) {
-      console.log(error)
-      failCallback && failCallback(error)
-    }
-  })
+  commonRequestFunction('smart-iot/gateway/addDevice',{},successCallback,failCallback)
 }
 /**
  * 进入准备配对状态，socket接收消息
@@ -36,24 +20,7 @@ let app = getApp();
  * @param {*} failCallback 
  */
 export function prepareDevice(params, successCallback, failCallback) {
-  wx.request({
-    url: baseUrl + 'smart-iot/gateway/openDevicePairing',
-    header: { token: app.token },
-    data: { params: params },
-    method: 'post',
-    success(data) {
-      console.log(data)
-      if (data.data.status.code == 200) {
-        successCallback && successCallback(data.data.data)
-      } else {
-        failCallback && failCallback(data.data)
-      }
-    },
-    fail(error) {
-      console.log(error)
-      failCallback && failCallback(error)
-    }
-  })
+  commonRequestFunction('smart-iot/gateway/openDevicePairing',params,successCallback,failCallback)
 }
 /**
  * 删除网关
@@ -62,24 +29,7 @@ export function prepareDevice(params, successCallback, failCallback) {
  * @param {*} failCallback 
  */
 export function removeGateway(gatewayId, successCallback, failCallback) {
-  wx.request({
-    url: baseUrl + 'smart-iot/gateway/remove',
-    header: { token: app.token },
-    data: { params: gatewayId },
-    method: 'post',
-    success(data) {
-      console.log(data)
-      if (data.data.status.code == 200) {
-        successCallback && successCallback(data.data.data)
-      } else {
-        failCallback && failCallback(data.data)
-      }
-    },
-    fail(error) {
-      console.log(error)
-      failCallback && failCallback(error)
-    }
-  })
+  commonRequestFunction('smart-iot/gateway/remove',{gatewayId},successCallback,failCallback)
 }
 /**
  * 查询房子的网关列表
@@ -88,24 +38,7 @@ export function removeGateway(gatewayId, successCallback, failCallback) {
  * @param {*} failCallback 
  */
 export function queryGateWaryByHouseId(houseId, successCallback, failCallback) {
-  wx.request({
-    url: baseUrl + 'smart-iot/gateway/queryGatewaysByHouseId',
-    header: { token: app.token },
-    data: { params: houseId },
-    method: 'post',
-    success(data) {
-      console.log(data)
-      if (data.data.status.code == 200) {
-        successCallback && successCallback(data.data.data)
-      } else {
-        failCallback && failCallback(data.data)
-      }
-    },
-    fail(error) {
-      console.log(error)
-      failCallback && failCallback(error)
-    }
-  })
+  commonRequestFunction('smart-iot/gateway/queryGatewaysByHouseId',{houseId},successCallback,failCallback)
 }
 
 /**
@@ -115,25 +48,7 @@ export function queryGateWaryByHouseId(houseId, successCallback, failCallback) {
  * @param {*} failCallback 
  */
 export function queryGatewayById(gatewayId, successCallback, failCallback) {
-  wx.request({
-    url: baseUrl + 'smart-iot/gateway/findById',
-    header: { token: app.token },
-    data: { params: gatewayId },
-    method: 'post',
-    success(data) {
-      console.log(data)
-      if (data.data.status.code == 200) {
-
-        successCallback && successCallback(data.data.data)
-      } else {
-        failCallback && failCallback(data.data)
-      }
-    },
-    fail(error) {
-      console.log(error)
-      failCallback && failCallback(error)
-    }
-  })
+  commonRequestFunction('smart-iot/gateway/findById',{gatewayId},successCallback,failCallback)
 }
 /**
  * 添加网关
@@ -142,25 +57,7 @@ export function queryGatewayById(gatewayId, successCallback, failCallback) {
  * @param {*} failCallback 
  */
 export function addGateWay(requestObj = {}, successCallback, failCallback) {
-  wx.request({
-    url: baseUrl + 'smart-iot/gateway/addGateway',
-    header: { token: app.token },
-    data: { params: requestObj },
-    method: 'post',
-    success(data) {
-      console.log(data)
-      if (data.data.status.code == 200) {
-
-        successCallback && successCallback(data.data.data)
-      } else {
-        failCallback && failCallback(data.data)
-      }
-    },
-    fail(error) {
-      console.log(error)
-      failCallback && failCallback(error)
-    }
-  })
+  commonRequestFunction('smart-iot/gateway/addGateway',requestObj,successCallback,failCallback)
 }
 
 export default {
