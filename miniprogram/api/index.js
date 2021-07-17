@@ -17,7 +17,6 @@ export {
   houseQueryAll,             //当前房子集合（用于测试）
   roomQueryAll,              //当前房间集合（用于测试）
   gatewayQueryAll,           //当前网关组（用于测试）
-  addDevice
 }
 
 
