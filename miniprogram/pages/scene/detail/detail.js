@@ -1,3 +1,5 @@
+import header from '../templates/header'
+
 const pageOptions = {
   // 页面数据
   data: {
@@ -5,6 +7,13 @@ const pageOptions = {
     sceneType: 0,
     sceneName: "",
     hasSet: false,
+  },
+  onTitleClose: function (event) {
+    header.onTitleClose(event)
+  }, 
+  
+  onTitleAdd: function (event) {
+    header.onTitleAdd(event)
   },
   // 页面载入时
   onLoad(e) {

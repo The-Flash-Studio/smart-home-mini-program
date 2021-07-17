@@ -1,7 +1,6 @@
 /* miniprogram/pages/scene/scene.wxss */
-
+@import "./templates/header.wxss";
 /* tab_style */
-
 .tab_box {
   width: 100vw;
   height: 100vh;
@@ -47,4 +46,10 @@
   padding: 5rpx 20rpx;
   border-radius: 12px;
   background-color: #e3f5f5;
+}
+
+
+.test_cell {
+  border-radius: 12px;
+  margin-top: 25rpx;
 }

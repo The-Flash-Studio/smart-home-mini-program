@@ -1,7 +1,76 @@
 <!--miniprogram/pages/scene/scene.wxml-->
-
+<import src="./templates/header.wxml"></import>
 <view class="tab_box">
+  <template is="index_header" data="{{...houseList}}" />
 
+  <van-cell
+    title="删除一个房子"
+    center
+    clickable
+    custom-class="test_cell common_shadow2"
+    title-class="scene_title"
+    use-label-slot="true"
+    bind:click="removeHouse"
+  />
+  <van-cell
+    title="查询第一个房子的网关"
+    center
+    clickable
+    custom-class="test_cell common_shadow2"
+    title-class="scene_title"
+    use-label-slot="true"
+    bind:click="queryGateWays"
+  />
+  <van-cell
+    title="添加一个网关"
+    center
+    clickable
+    size="large"
+    custom-class="test_cell common_shadow2"
+    title-class="scene_title"
+    use-label-slot="true"
+    bind:click="doAddGateway"
+  />
+  <van-cell
+    title="查询第一个网关"
+    center
+    clickable
+    size="large"
+    custom-class="test_cell common_shadow2"
+    title-class="scene_title"
+    use-label-slot="true"
+    bind:click="doQuerySingleGateway"
+  />
+  <van-cell
+    title="删除最后一个网关"
+    center
+    clickable
+    size="large"
+    custom-class="test_cell common_shadow2"
+    title-class="scene_title"
+    use-label-slot="true"
+    bind:click="doRemoveGateWay"
+  />
+  <van-cell
+    title="准备"
+    center
+    clickable
+    size="large"
+    custom-class="test_cell common_shadow2"
+    title-class="scene_title"
+    use-label-slot="true"
+    bind:click="doPrepareDevice"
+  />
+  <van-cell
+    title="添加设备"
+    center
+    clickable
+    size="large"
+    custom-class="test_cell common_shadow2"
+    title-class="scene_title"
+    use-label-slot="true"
+    bind:click="doAddDevice"
+  />
   <block
     wx:for="{{sceneTypeList}}"
     wx:for-item="tab_item"
@@ -29,7 +98,7 @@
             custom-class="scene_icon"
             slot="icon"
             name="chat"
-            color="red"
+            color="#47b0b8"
             size="28px"
           />
           <view slot="label" class="scene_label">{{item.description}}</view>

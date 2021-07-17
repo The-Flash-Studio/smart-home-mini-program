@@ -1,6 +1,10 @@
 "use strict";
 App({
-    openid:'',
+    openid: '',
+    token: '',
+    userId: '',
+    houseList: [],
+    gatewayList: [],
     onLaunch: function () {
         const _this = this
     },

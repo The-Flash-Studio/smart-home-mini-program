@@ -1,3 +1,5 @@
+<import src="../templates/header.wxml"></import>
+<template is="index_header" />
 <view class="page_box">
   <text >{{sceneName}} </text>
   <text >{{sceneType}} </text>
