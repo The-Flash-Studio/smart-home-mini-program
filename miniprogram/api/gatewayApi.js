@@ -1,6 +1,6 @@
 "use strict";
-// import baseUrl from './config'
-let baseUrl = 'http://10.32.33.151:5388/'
+import baseUrl from './config'
+// let baseUrl = 'http://10.32.33.151:5388/'
 let app = getApp();
 import commonRequestFunction from "./index"
 
@@ -70,6 +70,17 @@ export function queryDevicesByGatewayId(id, successCallback, failCallback) {
   commonRequestFunction('smart-iot/gateway/queryDevicesByGatewayId', { id: 30 }, successCallback, failCallback)
 }
 
+/**
+ * 发送控制命令进行控制设备
+ * @param {*} requestObj 
+ * @param {*} successCallback 
+ * @param {*} failCallback 
+ */
+export function sendCommand(requestObj = {}, successCallback, failCallback) {
+  console.log("sendCommand-> " + requestObj)
+  commonRequestFunction('smart-iot/gateway/sendCommand', requestObj, successCallback, failCallback)
+}
+
 export default {
   addGateWay,
   prepareDevice,
@@ -78,4 +89,5 @@ export default {
   queryGateWaryByHouseId,
   removeGateway,
   queryDevicesByGatewayId,
+  sendCommand,
 }
