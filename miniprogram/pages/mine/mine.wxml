@@ -1,2 +1,20 @@
-<!--miniprogram/pages/mine/mine.wxml-->
-<text bindtap="tapName">miniprogram/pages/mine/mine.wxml</text>
+<view class="userinfo_con">
+    <block wx:if="{{!hasUserInfo}}">
+        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
+        <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+      </block>
+    <block wx:else>
+    <view class="avatar_con">
+        <image class="avatar_img" src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIBkvyLpIW3BvQJz9jVibUdFkibZTzIeibjlNksORoYBicozFDYX7Bfg1wzWl3hv8CrYTsg7BQs8pSyFA/132"></image>
+        <view class="nick_name">fzhange</view>
+    </view>
+    <view class="item_con">
+        <view class="item_con_left">地区</view>
+        <view class="item_con_right">{{userInfo.country}}-{{userInfo.province}}-{{userInfo.city}}</view>
+    </view>
+    <view class="item_con">
+        <view class="item_con_left">性别</view>
+        <view class="item_con_right">{{userInfo.gender == 1 ? "男" : "女"}}</view>
+    </view>
+    </block>
+</view>
