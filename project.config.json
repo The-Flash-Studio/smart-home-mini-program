@@ -32,13 +32,23 @@
     "compileHotReLoad": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
+<<<<<<< HEAD
     "useApiHostProcess": true,
+=======
+>>>>>>> 7fe0cb6299df423d5dd9c5c9fcaac605c19fa3b9
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
+    "enableEngineNative": false,
+    "bundle": false,
     "useIsolateContext": true,
+<<<<<<< HEAD
+=======
+    "useCompilerModule": false,
+    "userConfirmedUseCompilerModuleSwitch": false,
+>>>>>>> 7fe0cb6299df423d5dd9c5c9fcaac605c19fa3b9
     "userConfirmedBundleSwitch": false,
     "packNpmManually": true,
     "packNpmRelationList": [
@@ -48,7 +58,11 @@
       }
     ],
     "minifyWXSS": true,
+<<<<<<< HEAD
     "showES6CompileOption": false
+=======
+    "useApiHostProcess": true
+>>>>>>> 7fe0cb6299df423d5dd9c5c9fcaac605c19fa3b9
   },
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},

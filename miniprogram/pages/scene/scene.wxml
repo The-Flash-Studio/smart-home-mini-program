@@ -22,6 +22,15 @@
     bind:click="queryGateWays"
   />
   <van-cell
+    title="查询30网关下设备列表"
+    center
+    clickable
+    custom-class="test_cell common_shadow2"
+    title-class="scene_title"
+    use-label-slot="true"
+    bind:click="queryDevicesByGatewayId"
+  />
+  <van-cell
     title="添加一个网关"
     center
     clickable
@@ -122,6 +131,43 @@
     </van-cell-group>
 
   </block>
+  <van-dialog
+    use-slot
+    title="标题"
+    show="{{ showHouseAddDialog }}"
+    show-cancel-button
+    bind:confirm="doHouseAddRequest"
+  >
+    <van-field
+      autosize
+      label="名称"
+      label-class="input_field_label"
+      type="textarea"
+      placeholder="请输入名称"
+      bind:change="onEditHouseName"
+    />
+    <van-field
+      autosize
+      label="地址"
+      type="textarea"
+      placeholder="请输入地址"
+      bind:change="onEditHouseAddress"
+    />
+  </van-dialog>
 
+  <van-popup
+    show="{{ showHouseChangeDialog }}"
+    bind:close="onPopupClose"
+    position="bottom"
+    round="true"
+  >
+    <van-picker
+      columns="{{ columns }}"
+      default-index="{{ 2 }}"
+      bind:change="onChange"
+      is="changeHouse"
+      data="{{houseNameList}}"
+    />
+  </van-popup>
 </view>
 

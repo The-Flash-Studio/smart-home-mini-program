@@ -1,6 +1,6 @@
 "use strict";
-// import baseUrl from './config'
-let baseUrl = 'http://10.32.33.151:5388/'
+import baseUrl from './config'
+// let baseUrl = 'http://10.32.33.151:5388/'
 let app = getApp();
 import commonRequestFunction from "./index"
 
@@ -9,8 +9,8 @@ import commonRequestFunction from "./index"
  * @param {*} successCallback 
  * @param {*} failCallback 
  */
- export function addDevice(successCallback, failCallback) {
-  commonRequestFunction('smart-iot/gateway/addDevice',{},successCallback,failCallback)
+export function addDevice(successCallback, failCallback) {
+  commonRequestFunction('smart-iot/gateway/addDevice', {}, successCallback, failCallback)
 }
 /**
  * 进入准备配对状态，socket接收消息
@@ -20,7 +20,7 @@ import commonRequestFunction from "./index"
  * @param {*} failCallback 
  */
 export function prepareDevice(params, successCallback, failCallback) {
-  commonRequestFunction('smart-iot/gateway/openDevicePairing',params,successCallback,failCallback)
+  commonRequestFunction('smart-iot/gateway/openDevicePairing', params, successCallback, failCallback)
 }
 /**
  * 删除网关
@@ -29,7 +29,7 @@ export function prepareDevice(params, successCallback, failCallback) {
  * @param {*} failCallback 
  */
 export function removeGateway(gatewayId, successCallback, failCallback) {
-  commonRequestFunction('smart-iot/gateway/remove',{gatewayId},successCallback,failCallback)
+  commonRequestFunction('smart-iot/gateway/remove', { gatewayId }, successCallback, failCallback)
 }
 /**
  * 查询房子的网关列表
@@ -38,7 +38,7 @@ export function removeGateway(gatewayId, successCallback, failCallback) {
  * @param {*} failCallback 
  */
 export function queryGateWaryByHouseId(houseId, successCallback, failCallback) {
-  commonRequestFunction('smart-iot/gateway/queryGatewaysByHouseId',{houseId},successCallback,failCallback)
+  commonRequestFunction('smart-iot/gateway/queryGatewaysByHouseId', { houseId }, successCallback, failCallback)
 }
 
 /**
@@ -48,7 +48,7 @@ export function queryGateWaryByHouseId(houseId, successCallback, failCallback) {
  * @param {*} failCallback 
  */
 export function queryGatewayById(gatewayId, successCallback, failCallback) {
-  commonRequestFunction('smart-iot/gateway/findById',{gatewayId},successCallback,failCallback)
+  commonRequestFunction('smart-iot/gateway/findById', { gatewayId }, successCallback, failCallback)
 }
 /**
  * 添加网关
@@ -57,7 +57,28 @@ export function queryGatewayById(gatewayId, successCallback, failCallback) {
  * @param {*} failCallback 
  */
 export function addGateWay(requestObj = {}, successCallback, failCallback) {
-  commonRequestFunction('smart-iot/gateway/addGateway',requestObj,successCallback,failCallback)
+  commonRequestFunction('smart-iot/gateway/addGateway', requestObj, successCallback, failCallback)
+}
+
+/**
+ * 查询网关下设备列表
+ * @param {*} id 
+ * @param {*} successCallback 
+ * @param {*} failCallback 
+ */
+export function queryDevicesByGatewayId(id, successCallback, failCallback) {
+  commonRequestFunction('smart-iot/gateway/queryDevicesByGatewayId', { id: 30 }, successCallback, failCallback)
+}
+
+/**
+ * 发送控制命令进行控制设备
+ * @param {*} requestObj 
+ * @param {*} successCallback 
+ * @param {*} failCallback 
+ */
+export function sendCommand(requestObj = {}, successCallback, failCallback) {
+  console.log("sendCommand-> " + requestObj)
+  commonRequestFunction('smart-iot/gateway/sendCommand', requestObj, successCallback, failCallback)
 }
 
 export default {
@@ -67,4 +88,6 @@ export default {
   queryGatewayById,
   queryGateWaryByHouseId,
   removeGateway,
+  queryDevicesByGatewayId,
+  sendCommand,
 }
