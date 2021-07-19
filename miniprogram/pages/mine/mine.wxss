@@ -1,5 +1,9 @@
 .userinfo_con{
-    margin-top: 24rpx;
+    width: 100vw;
+    background-color: transparent;
+    box-sizing: border-box;
+    padding: 50px 30rpx 0 30rpx;
+    position: relative;
 }
 .avatar_con{
     display: flex;
