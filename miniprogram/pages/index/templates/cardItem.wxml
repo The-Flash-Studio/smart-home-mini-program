@@ -2,15 +2,17 @@
 <template name="cardItem">
   <view class="equp_card_box common_shadow flex_column_space">
     <!-- 家电图标 -->
-    <text wx:if="{{name==='智能门锁'}}" class="iconfont icon-yaokongqi" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
-    <text wx:if="{{name==='智能空调'}}" class="iconfont icon-kongtiao" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
-    <text wx:if="{{name==='智能湿度传感器'}}" class="iconfont icon-dianreshuihu" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
-    <text wx:if="{{name==='LED灯泡'}}" class="iconfont icon-wurenji" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
-    <text wx:if="{{name==='智能扫地机器人'}}" class="iconfont icon-zhinengjiqiren" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
-    <text wx:if="{{name==='智能空气净化器'}}" class="iconfont icon-fengshan" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
+    <text wx:if="{{nickName==='智能门锁'}}" class="iconfont icon-yaokongqi" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
+    <text wx:elif="{{nickName==='智能空调'}}" class="iconfont icon-kongtiao" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
+    <text wx:elif="{{nickName==='水浸传感器'}}" class="iconfont icon-dianreshuihu" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
+    <text wx:elif="{{nickName==='LED灯泡'}}" class="iconfont icon-wurenji" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
+    <text wx:elif="{{nickName==='智能扫地机器人'}}" class="iconfont icon-zhinengjiqiren" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
+    <text wx:elif="{{nickName==='智能空气净化器'}}" class="iconfont icon-fengshan" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
+    <text wx:else class="iconfont icon-fengshan" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
     <!-- 标题 -->
-    <text class="card_title text_of_lines1">{{name}}</text>
-    <text class="card_subtitle text_of_lines1">{{position}}</text>
-    <text class="iconfont icon-kaiguan" style="font-size:40rpx;color:#FF8691;position:absolute;right:30rpx;top:20rpx"></text>
+    <text class="card_title text_of_lines1">{{nickName}}</text>
+    <text class="card_subtitle text_of_lines1">{{description}}</text>
+    <van-switch checked="{{ powerSource === 'true' }}" bind:change="onDeviceStatusChange" data-changedDeviceId="{{id}}" style="position:absolute;right:30rpx;top:20rpx" size="40rpx"/>
+    <!-- <text class="iconfont icon-kaiguan" style="font-size:40rpx;color:#FF8691;position:absolute;right:30rpx;top:20rpx"></text> -->
   </view>
 </template>

@@ -1,0 +1,5 @@
+<import src="./templates/header.wxml"></import>
+<view class="tab_box">
+  <template is="index_header" data="{{deviceName}}" />
+</view>
+

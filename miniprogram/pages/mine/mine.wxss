@@ -1,1 +1,30 @@
-/* miniprogram/pages/mine/mine.wxss */
+.userinfo_con{
+    margin-top: 24rpx;
+}
+.avatar_con{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.avatar_img{
+    width: 180rpx;
+    height: 180rpx;
+    border-radius: 50%;
+}
+.nick_name{
+    margin: 24rpx 0rpx;
+}
+.item_con{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 18rpx;
+    height: 86rpx;
+    border-bottom: 1rpx solid #ddd;
+    align-items: center;
+}
+.item_con_left{
+
+}
+.item_con_right{
+
+}

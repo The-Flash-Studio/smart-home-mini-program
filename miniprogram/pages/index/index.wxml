@@ -20,10 +20,10 @@
     lazy-render="true"
     ellipsis="false"
     >
-    <block wx:for="{{gatewayList}}" wx:for-item="tab_item" wx:for-index="tab_idx" wx:key="tab_idx">
+    <block wx:for="{{houseList}}" wx:for-item="tab_item" wx:for-index="tab_idx" wx:key="tab_idx">
       <van-tab title="{{tab_item.name}}">
         <view class="tab_content_container">
-          <block wx:for="{{tab_item.equipmentList}}" wx:key="index">
+          <block wx:for="{{devicesList}}" wx:key="index">
             <template is="cardItem" data="{{...item}}"/>
           </block>
         </view>
@@ -40,6 +40,8 @@
     >
     <template is="changeHouse" data="{{houseNameList}}"/>
   </van-popup>
+
+  <van-toast id="van-toast" />
 </view>
 
 

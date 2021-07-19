@@ -1,0 +1,18 @@
+<template name="index_header">
+  <view class="index_header_container">
+    <view class="header_title_box flex_row_start_center">
+      <text class="iconfont icon-close" style="font-size:15px margin-right:20px" bindtap="onTitleClose"></text>
+      <view class="title_box flex_row_space">
+        <text class="title_text">智能家庭</text>
+        <text class="iconfont icon-jiantou" style="font-size:10px"></text>
+      </view>
+      <view class="icon_box flex_row_center" bindtap="onTitleAdd">
+        <van-icon name="plus" size="20" />
+      </view>
+      <view class="icon_box flex_row_center" bindtap="onTitleVolume">
+        <van-icon name="volume-o" size="20" />
+      </view>
+    </view>
+  </view>
+</template>
+

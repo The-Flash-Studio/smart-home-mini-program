@@ -1,6 +1,9 @@
 "use strict";
 var app = getApp();
-import {getUserDeviceInfo,wechatLogin,houseQueryAll,roomQueryAll,gatewayQueryAll,queryDevicesByGatewayId} from '../../api/index'
+import { wechatLogin,houseQueryAll,roomQueryAll,gatewayQueryAll } from '../../api/index'
+import { queryDevicesByGatewayId,sendCommand } from '../../api/gatewayApi'
+import { updateDeviceInfo } from '../../api/devcieApi'
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 
 Page({
     data: {
@@ -9,8 +12,7 @@ Page({
         houseNameList:[],
         currHouseData:null,
         roomList:[],
-        gatewayList:[],
-        currGateway:null,
+        devicesList:[],
         showPopup:false,
     }, 
     onLoad: function () {
@@ -47,11 +49,13 @@ Page({
 
     fetchData: function(house_id){
         let _this = this
-
-        // getUserDeviceInfo().then(e=>{
-        //     _this.setData(e)
-        //     console.log(e.sceneList);
-        // })
+        _this.setData({
+            houseList:[],
+            houseNameList:[],
+            currHouseData:null,
+            roomList:[],
+            devicesList:[],
+        })
 
         // 当前房子集合（用于测试）
         houseQueryAll((e)=>{
@@ -75,39 +79,69 @@ Page({
                 currHouseData,
                 houseNameList
             })
+            console.log(currHouseData)
             
-            // // 当前房间集合（用于测试）
-            // roomQueryAll((e)=>{
-            //     const data = e.data.data;
-            //     const {roomList} = data;
-            //     _this.setData({roomList})
-            // })
-
-            // 当前网关组（用于测试）
-            gatewayQueryAll((e)=>{
+            // 当前房间集合（用于测试）
+            roomQueryAll((e)=>{
                 const data = e.data.data;
-                const {gatewayList} = data;
-                const {id} = gatewayList[0]
-                queryDevicesByGatewayId({
-                    params:id
-                },(res)=>{
-                    _this.setData({gatewayList})
+                const {roomList} = data;
+                console.log(roomList)
+                _this.setData({roomList})
+
+                // 查询网关下设备列表
+                queryDevicesByGatewayId({id:30},(e)=>{
+                    const {devices:devicesList} = e;
+                    console.log(devicesList)
+                    _this.setData({
+                        devicesList
+                    })
                 })
+
+
             })
         })
     },
 
     // 切换标签
     onChange: function (e) {
-        const index = e.detail.index;
-        const data = this.data.gatewayList[index];
-        const {id} = data;
-
-        queryDevicesByGatewayId({
-            params:id
-        },(res)=>{
-            console.log(res)
+        // 查询网关下设备列表
+        queryDevicesByGatewayId({id:30},(e)=>{
+            const {devices:devicesList} = e;
+            console.log(devicesList)
+            this.setData({
+                devicesList
+            })
         })
+    },
+
+    // 切换设备状态
+    onDeviceStatusChange: function(e){
+        let {changeddeviceid} = e.target.dataset,currDeviceData;
+
+        const newDvicesList = this.data.devicesList.map((e)=>{
+            const item = e;
+            if(e.id === changeddeviceid){
+                item.powerSource = e.powerSource == 'false' ? 'true' : 'false'
+                currDeviceData = item;
+            }
+            return item;
+        });
+
+        // 发送控制命令
+        // sendCommand(currDeviceData,()=>{
+            // 更新设备信息
+            !!currDeviceData && updateDeviceInfo(currDeviceData,(e)=>{
+                Toast.success(`${currDeviceData.powerSource === 'true' ? '打开' : '关闭'}${currDeviceData.nickName}`);
+                this.setData({
+                    devicesList:newDvicesList
+                })
+            },(err)=>{
+                Toast.fail('状态切换失败');
+            })
+        // },(err)=>{
+        //     Toast.fail('控制命令失败');
+        // })
+        
     },
 
     // 添加设备
