@@ -16,10 +16,11 @@
     tab-class="tab-class"
     animated="true"
     swipeable="true"
-    swipe-threshold="4"
+    swipe-threshold="3"
     lazy-render="true"
+    ellipsis="false"
     >
-    <block wx:for="{{roomList}}" wx:for-item="tab_item" wx:for-index="tab_idx" wx:key="tab_idx">
+    <block wx:for="{{houseList}}" wx:for-item="tab_item" wx:for-index="tab_idx" wx:key="tab_idx">
       <van-tab title="{{tab_item.name}}">
         <view class="tab_content_container">
           <block wx:for="{{devicesList}}" wx:key="index">
