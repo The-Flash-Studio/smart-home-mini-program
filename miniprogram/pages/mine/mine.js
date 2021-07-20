@@ -1,3 +1,4 @@
+const USER_INFO = "__userinfo__"
 Page({
   data: {
     userInfo: {},
@@ -5,10 +6,18 @@ Page({
     canIUseGetUserProfile: false,
   },
   onLoad() {
-    if (wx.getUserProfile) {
-      this.setData({
-        canIUseGetUserProfile: true
+    const userInfo = wx.getStorageSync(USER_INFO);
+    if(userInfo){
+       this.setData({
+        userInfo: JSON.parse(userInfo),
+        hasUserInfo: true
       })
+    }else{
+      if (wx.getUserProfile) {
+        this.setData({
+          canIUseGetUserProfile: true
+        })
+      }
     }
   },
   getUserProfile(e) {
@@ -17,7 +26,7 @@ Page({
     wx.getUserProfile({
       desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
-        console.log('res.userInfo: ', res.userInfo)
+        wx.setStorageSync(USER_INFO, JSON.stringify(res.userInfo));
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
