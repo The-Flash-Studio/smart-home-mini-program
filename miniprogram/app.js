@@ -10,8 +10,8 @@ App({
         isSocketConnect: false,
         heartBeatTime: 20000,
         loginCheckTime: 30000,
-        url: "ws://api.koudaibook.com/smart-iot/webSocket/",
-        // url: "ws://10.32.33.151:5388/smart-iot/webSocket/",
+        url: "wss://api.koudaibook.com/smart-iot/webSocket/",
+        // url: "wss://10.32.33.151:5388/smart-iot/webSocket/",
         callback: function () { },
         clientTimer: null,
         heartTimer: null,
@@ -100,7 +100,7 @@ App({
         })
         wx.onSocketClose((res) => {
             if (that.socketInfo.isSocketConnect) {
-                that.doSocketConnectFunction()
+                that.doSocketConnectFunction(that.token)
             }
         })
         wx.onSocketMessage((res) => {
