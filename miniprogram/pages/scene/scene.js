@@ -1,8 +1,7 @@
 // miniprogram/pages/scene/scene.js
 var app = getApp();
-import {
-  addGateWay, queryGateWaryByHouseId, queryGatewayById, removeGateway, prepareDevice, addDevice, queryDevicesByGatewayId
-} from '../../api/gatewayApi';
+
+import { addDevice, addGateWay, prepareDevice, queryDevicesByGatewayId, queryGateWaryByHouseId, queryGatewayById, removeGateway } from '../../api/gatewayApi';
 import {
   addHouse, queryHouseByUser, removeHouse
 } from '../../api/houseApi';
@@ -29,19 +28,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.onSocketMessage();
     const _this = this;
-    let user_token = wx.getStorageSync('user_token');
+    let user_token = app.token
 
     // 存在Token
     if (user_token) {
-      app.token = user_token
-      console.log('token from storage:', user_token)
+      
+      console.log('token from App:', user_token)
       this.loginSuccessAction(user_token)
     }
     // 不存在Token
     else {
-
+      let storageToken = wx.getStorageSync('user_token');
       // 获取用户信息
+      if (storageToken) {
+        app.token = user_token
+        console.log('token from Storage:', user_token)
+        this.loginSuccessAction(user_token)
+        return
+      }
       wx.login({
         success: function (res) {
           const userCode = res.code;
@@ -59,7 +65,7 @@ Page({
             })
             app.token = _token.token
             console.log('token From Server:', _token)
-            _this.loginSuccessAction(_token)
+            _this.loginSuccessAction(_token.token)
           })
         }
       });
@@ -67,27 +73,16 @@ Page({
 
   },
 
+  onSocketMessage: function () {
+    var that = this
+    app.socketInfo.callback = function (res) {
+      console.log("onSocketMessage Scene :", res)
+    }
+  },
+
   loginSuccessAction: function (user_token) {
     getAllMockDevices(user_token).then(e => {
       this.setData(e)
-    })
-    console.log("loginSuccessAction token-> ", app.token.token)
-    wx.connectSocket({
-      url: "ws://10.32.33.151:5388/smart-iot/webSocket/" + app.token.token
-    })
-
-    wx.onSocketOpen(function (res) {
-      console.log("onSocketOpen " + res)
-    })
-    wx.onSocketMessage(function (res) {
-      console.log("onSocketMessage " + res)
-    })
-    wx.onSocketError(function (res) {
-      console.log("onSocketError " + res)
-    })
-
-    wx.onSocketClose(function (res) {
-      console.log("onSocketClose " + res)
     })
 
     queryHouseByUser((data) => {
@@ -318,10 +313,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    app.socketTask.onClose((result) => {
-      console.log("wx.closeSocket()")
-    })
-    wx.closeSocket()
   },
 
 })
