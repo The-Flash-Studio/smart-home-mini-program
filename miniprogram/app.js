@@ -1,15 +1,14 @@
 "use strict";
-import { wechatLogin } from './api/index';
+import { isLoginCheck } from './api/index';
 App({
-    openid: '',
     token: '',
     userId: '',
     houseList: [],
     gatewayList: [],
     socketInfo: {
         isSocketConnect: false,
-        heartBeatTime: 20000,
-        loginCheckTime: 30000,
+        heartBeatTime: 25000,
+        loginCheckTime: 120000,
         url: "wss://api.koudaibook.com/smart-iot/webSocket/",
         // url: "wss://10.32.33.151:5388/smart-iot/webSocket/",
         callback: function () { },
@@ -35,48 +34,18 @@ App({
     },
 
     checkUserLoginStatus: function () {
-        if (this.token) {//有效期检查
-            if (!this.socketInfo.isSocketConnect) {
-                _this.doSocketConnectFunction(this.token)
-            }
-            console.log('App token AlreadExist ')
-            return
-        }
-
-        let user_token = wx.getStorageSync('user_token');
-
-        if (user_token) {
-            this.token = user_token
-            console.log('App token from Storage')
-            if (!this.socketInfo.isSocketConnect) {
-                this.doSocketConnectFunction(user_token)
-            }
-            return
-        }
-        this.doSocketCloseFunction()
         let _this = this;
-        wx.login({
-            success: function (res) {
-                const userCode = res.code;
-                _this.userCode = userCode;
-                console.log('App userCode from From WeChat:', userCode)
-                // 微信登录
-                wechatLogin({
-                    params: userCode
-                }, (res) => {
-                    const { data: _token } = res.data;
-                    !!_token && wx.setStorage({
-                        key: "user_token",
-                        data: _token.token
-                    })
-                    _this.token = _token.token
-                    _this.doSocketConnectFunction(user_token)
-                    console.log('App token From Server:', _token)
-                }, (error) => {
-                    console.log("App login error :", error)
-                })
+        isLoginCheck((isLogin, token) => {
+            if (isLogin == true && token) {
+                _this.token = token
+                console.log('App token from callback')
+                if (!_this.socketInfo.isSocketConnect) {
+                    _this.doSocketConnectFunction(token)
+                }
+            } else {
+                _this.doSocketCloseFunction()
             }
-        });
+        })
     },
 
     doSocketConnectFunction: function (token) {

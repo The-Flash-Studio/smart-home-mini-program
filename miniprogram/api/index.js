@@ -27,7 +27,7 @@ export {
  * 通过wx.login获取code，换取自定义登录态
  */
 function wxLogin(loginSuccessCallBack) {
-  const loginException = ()=>{ wx.showToast({title: '用户登录异常', icon: 'error', duration: 2000}) }
+  const loginException = () => { wx.showToast({ title: '用户登录异常', icon: 'error', duration: 2000 }) }
   wx.login({
     success: function (res) {
       const userCode = res.code;
@@ -39,7 +39,7 @@ function wxLogin(loginSuccessCallBack) {
           const token = data?.data?.data?.token || '';
           if(token) {
             wx.setStorageSync(TOKEN_NAME, token)
-            loginSuccessCallBack();
+            loginSuccessCallBack(true, token);
           }else loginException();
         },
         fail(error) {
@@ -55,20 +55,24 @@ function wxLogin(loginSuccessCallBack) {
  * 微信验证是否登录
  */
 
-function isLoginCheck(logicFunction){
+function isLoginCheck(logicFunction) {
   const token = wx.getStorageSync(TOKEN_NAME);
-  wx.request({  
+  if(!token) {
+    wxLogin(logicFunction)
+    return
+  }
+  wx.request({
     url: baseUrl + 'simple-account/account/assertWechatLogin',
     header: { token: token },
     data: { params: {} },
     method: 'post',
     success(data) {
       const isLogin = data?.data?.data?.login || false;
-      if(isLogin) logicFunction();
+      if(isLogin) logicFunction(true, token);
       else wxLogin(logicFunction);
     },
     fail(error) {
-      wx.showToast({title: '检查登录逻辑异常', icon: 'error', duration: 2000})
+      wx.showToast({ title: '检查登录逻辑异常', icon: 'error', duration: 2000 })
     }
   })
 }
@@ -78,8 +82,8 @@ function isLoginCheck(logicFunction){
 /**
  * 公共请求接口。统一处理登录态校验，用户登录，等逻辑。
  */
-export default function commonRequestFunction(requestUrl,params, successCallback, failCallback){
-  const logicFunction = function(){
+export default function commonRequestFunction(requestUrl, params, successCallback, failCallback) {
+  const logicFunction = function() {
     const token = wx.getStorageSync(TOKEN_NAME);
     wx.request({
       url: baseUrl + requestUrl,

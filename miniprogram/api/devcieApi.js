@@ -37,7 +37,7 @@ export function getDeviceById(requestObj = {}, successCallback, failCallback) {
 /**
  * 测试用
  */
-export function getAllMockDevices(openid) {
+export function getAllMockDevices() {
   const res = {}
   res.sceneTypeList = [{
     name: '推荐场景',

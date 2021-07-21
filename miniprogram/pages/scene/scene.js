@@ -1,14 +1,14 @@
 // miniprogram/pages/scene/scene.js
 var app = getApp();
 
+import {
+  getAllMockDevices
+} from '../../api/devcieApi';
 import { addDevice, addGateWay, prepareDevice, queryDevicesByGatewayId, queryGateWaryByHouseId, queryGatewayById, removeGateway } from '../../api/gatewayApi';
 import {
   addHouse, queryHouseByUser, removeHouse
 } from '../../api/houseApi';
-import { wechatLogin } from '../../api/index';
-import {
-  getAllMockDevices
-} from '../../api/devcieApi';
+import { isLoginCheck } from '../../api/index';
 import header from './templates/header';
 Page({
 
@@ -30,58 +30,31 @@ Page({
   onLoad: function (options) {
     this.onSocketMessage();
     const _this = this;
-    let user_token = app.token
-
     // 存在Token
-    if (user_token) {
-      
-      console.log('token from App:', user_token)
-      this.loginSuccessAction(user_token)
+    if (app.token) {
+      console.log('token from App:', app.token)
+      this.loginSuccessAction()
     }
     // 不存在Token
     else {
-      let storageToken = wx.getStorageSync('user_token');
-      // 获取用户信息
-      if (storageToken) {
-        app.token = user_token
-        console.log('token from Storage:', user_token)
-        this.loginSuccessAction(user_token)
-        return
-      }
-      wx.login({
-        success: function (res) {
-          const userCode = res.code;
-          app.userCode = userCode;
-
-          console.log('userCode from From WeChat:', userCode)
-          // 微信登录
-          wechatLogin({
-            params: userCode
-          }, (res) => {
-            const { data: _token } = res.data;
-            !!_token && wx.setStorage({
-              key: "user_token",
-              data: _token.token
-            })
-            app.token = _token.token
-            console.log('token From Server:', _token)
-            _this.loginSuccessAction(_token.token)
-          })
+      isLoginCheck((islogin, token) => {
+        if (islogin == true && token) {
+          app.token = token
+          console.log('token from isLoginCheck:', token)
+          this.loginSuccessAction()
         }
-      });
+      })
     }
-
   },
 
   onSocketMessage: function () {
-    var that = this
     app.socketInfo.callback = function (res) {
       console.log("onSocketMessage Scene :", res)
     }
   },
 
-  loginSuccessAction: function (user_token) {
-    getAllMockDevices(user_token).then(e => {
+  loginSuccessAction: function () {
+    getAllMockDevices().then(e => {
       this.setData(e)
     })
 
