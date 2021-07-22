@@ -13,7 +13,7 @@
     <block wx:else>
     <view class="avatar_con">
         <image class="avatar_img" src="{{userInfo.avatarUrl}}"></image>
-        <view class="nick_name">fzhange</view>
+        <view class="nick_name">{{userInfo.nickName}}</view>
     </view>
     <view class="item_con">
         <view class="item_con_left">地区</view>
