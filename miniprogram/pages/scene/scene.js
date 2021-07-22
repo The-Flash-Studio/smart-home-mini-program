@@ -1,15 +1,14 @@
 // miniprogram/pages/scene/scene.js
 var app = getApp();
-import {
-  addGateWay, queryGateWaryByHouseId, queryGatewayById, removeGateway, prepareDevice, addDevice, queryDevicesByGatewayId
-} from '../../api/gatewayApi';
-import {
-  addHouse, queryHouseByUser, removeHouse
-} from '../../api/houseApi';
-import { wechatLogin } from '../../api/index';
+
 import {
   getAllMockDevices
 } from '../../api/devcieApi';
+import { addDevice, addGateWay, prepareDevice, queryDevicesByGatewayId, queryGateWaryByHouseId, queryGatewayById, removeGateway } from '../../api/gatewayApi';
+import {
+  addHouse, queryHouseByUser, removeHouse
+} from '../../api/houseApi';
+import { isLoginCheck } from '../../api/index';
 import header from './templates/header';
 Page({
 
@@ -29,65 +28,34 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.onSocketMessage();
     const _this = this;
-    let user_token = wx.getStorageSync('user_token');
-
     // 存在Token
-    if (user_token) {
-      app.token = user_token
-      console.log('token from storage:', user_token)
-      this.loginSuccessAction(user_token)
+    if (app.token) {
+      console.log('token from App:', app.token)
+      this.loginSuccessAction()
     }
     // 不存在Token
     else {
-
-      // 获取用户信息
-      wx.login({
-        success: function (res) {
-          const userCode = res.code;
-          app.userCode = userCode;
-
-          console.log('userCode from From WeChat:', userCode)
-          // 微信登录
-          wechatLogin({
-            params: userCode
-          }, (res) => {
-            const { data: _token } = res.data;
-            !!_token && wx.setStorage({
-              key: "user_token",
-              data: _token.token
-            })
-            app.token = _token.token
-            console.log('token From Server:', _token)
-            _this.loginSuccessAction(_token)
-          })
+      isLoginCheck((islogin, token) => {
+        if (islogin == true && token) {
+          app.token = token
+          console.log('token from isLoginCheck:', token)
+          this.loginSuccessAction()
         }
-      });
+      })
     }
-
   },
 
-  loginSuccessAction: function (user_token) {
-    getAllMockDevices(user_token).then(e => {
+  onSocketMessage: function () {
+    app.socketInfo.callback = function (res) {
+      console.log("onSocketMessage Scene :", res)
+    }
+  },
+
+  loginSuccessAction: function () {
+    getAllMockDevices().then(e => {
       this.setData(e)
-    })
-    console.log("loginSuccessAction token-> ", app.token.token)
-    wx.connectSocket({
-      url: "ws://10.32.33.151:5388/smart-iot/webSocket/" + app.token.token
-    })
-
-    wx.onSocketOpen(function (res) {
-      console.log("onSocketOpen " + res)
-    })
-    wx.onSocketMessage(function (res) {
-      console.log("onSocketMessage " + res)
-    })
-    wx.onSocketError(function (res) {
-      console.log("onSocketError " + res)
-    })
-
-    wx.onSocketClose(function (res) {
-      console.log("onSocketClose " + res)
     })
 
     queryHouseByUser((data) => {
@@ -318,10 +286,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    app.socketTask.onClose((result) => {
-      console.log("wx.closeSocket()")
-    })
-    wx.closeSocket()
   },
 
 })
