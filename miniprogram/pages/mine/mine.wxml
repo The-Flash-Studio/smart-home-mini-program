@@ -1,11 +1,18 @@
 <view class="userinfo_con">
     <block wx:if="{{!hasUserInfo}}">
-        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-        <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+        <view class="grant_con_wrap">
+            <view class="grant_con">
+                <image class="avatar_img" src="https://s1.aigei.com/src/img/png/94/94ea7249361348c38135b3c93c8175f0.png?imageMogr2/auto-orient/thumbnail/!500x500r/gravity/Center/crop/500x500/quality/85/imageView2/2/w/500/|watermark/3/text/54ix57uZ572R57Sg5p2Q57yW5Y-3IzQyODgyODc4/font/5b6u6L2v6ZuF6buR/fontsize/272/fill/cmVk/dissolve/92/gravity/SouthEast/dx/27/dy/27/text/5YiG5a2Q5p2f5aSW5bu2KE1CRSk=/font/5b6u6L2v6ZuF6buR/fontsize/272/fill/cmVk/dissolve/92/gravity/NorthWest/dx/27/dy/27/text/NTEyw5c1MTI=/font/5b6u6L2v6ZuF6buR/fontsize/272/fill/cmVk/dissolve/92/gravity/SouthWest/dx/27/dy/27/text/5omL5py6/font/5b6u6L2v6ZuF6buR/fontsize/272/fill/cmVk/dissolve/92/gravity/NorthEast/dx/27/dy/27//text/54ix57uZ572RIGFpZ2VpLmNvbQ==/font/5b6u6L2v6ZuF6buR/fontsize/300/fill/TWFyb29u/dissolve/42/gravity/NorthWest/dx/62/dy/270&e=1735488000&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:ZuFrt_dop8gORjR2dFJKUnXrDIg="></image>
+                <view class="hello_tip">hi，请登录</view>
+                <view class="tip">授权后，可以更好的体验我们哦</view>
+                <button class="grant_btn" wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile">微信用户授权</button>
+                <button class="grant_btn" wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 微信用户授权 </button> 
+            </view>
+        </view>
       </block>
     <block wx:else>
     <view class="avatar_con">
-        <image class="avatar_img" src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIBkvyLpIW3BvQJz9jVibUdFkibZTzIeibjlNksORoYBicozFDYX7Bfg1wzWl3hv8CrYTsg7BQs8pSyFA/132"></image>
+        <image class="avatar_img" src="{{userInfo.avatarUrl}}"></image>
         <view class="nick_name">fzhange</view>
     </view>
     <view class="item_con">

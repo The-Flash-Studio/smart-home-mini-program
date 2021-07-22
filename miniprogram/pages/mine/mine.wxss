@@ -32,3 +32,29 @@
 .item_con_right{
 
 }
+
+.grant_con{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.grant_btn{
+    color: #fff;
+    background-color: #4caf50;
+
+}
+.hello_tip{
+    margin: 24rpx 0rpx;
+    font-size: 32rpx;
+    font-weight: bold;
+}
+.tip{
+    margin: 24rpx 0rpx 64rpx 0rpx;
+}
+.grant_con_wrap{
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(50%);
+}
