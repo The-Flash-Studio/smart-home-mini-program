@@ -1,5 +1,111 @@
-<import src="./templates/header.wxml"></import>
-<view class="tab_box">
-  <template is="index_header" data="{{deviceName}}" />
+<view class="page-box">
+
+  <van-nav-bar
+    title="{{deviceInfo.nickName}}"
+    left-text="返回"
+    right-text=""
+    left-arrow
+    bind:click-left="onClickLeft"
+    bind:click-right="onClickRight"
+    custom-style="nav-bar"
+  >
+    <van-icon
+      name="delete"
+      size="20"
+      slot="right"
+    />
+  </van-nav-bar>
+
+  <van-steps
+    steps="{{steps}}"
+    active="{{stepsActive}}"
+    active-color="#38f"
+  />
+  <!-- 基础信息 deviceInfo.powerSource -->
+  <van-cell title=" 电源">
+    <van-icon
+      slot="icon"
+      name="cluster-o"
+      color="blue"
+      size="18px"
+    />
+    <block wx:if="{{deviceInfo.powerSource=='true'}}">
+      <van-tag
+        round
+        plain
+        type="success"
+        size="medium"
+      >
+        <van-icon name="success" color="green" />
+        正常
+      </van-tag>
+
+    </block>
+    <block wx:else>
+      <van-tag
+        round
+        plain
+        type="danger"
+        size="medium"
+      >
+        <van-icon name="fail" color="red" />
+        异常
+      </van-tag>
+
+    </block>
+  </van-cell>
+
+  <view class="checkbox-container">
+    <!-- <van-checkbox
+      value="{{ currentCheckValue }}"
+      icon-size="20px"
+      shape="square"
+      checked-color="#07c160"
+      bind:change="onCheckChange"
+    >
+      关闭
+    </van-checkbox> -->
+  </view>
+
+  <!-- <van-slider
+    value="{{ currentValue }}"
+    use-button-slot
+    bar-height="3px"
+    bind:change="onSliderChange"
+    bind:drag="onSliderDrag"
+    custom-class="slider"
+  >
+    <view slot="button" class="slider-button">
+      {{ currentValueShow }}
+    </view>
+  </van-slider> -->
+
+  <view class="circle-container">
+    <!-- <van-circle
+      value="{{ currentValue }}"
+      size="120"
+      stroke-width="5"
+      text="水量"
+      color="{{circleGradientColor}}"
+      layer-color="#eeeeee"
+    /> -->
+  </view>
+  <!-- van-circle fill="antiquewhite" 该属性会挡住文字-->
+
+  <view class="confirm-button-container">
+
+    <van-button
+      type="primary"
+      size="large"
+      round
+      loading="{{isRequesting}}"
+      bind:click="onConfirmSet"
+    >
+      保存设置
+    </van-button>
+  </view>
+
 </view>
+<van-dialog id="van-dialog" />
+<van-toast id="van-toast" />
 

@@ -7,7 +7,7 @@ App({
     gatewayList: [],
     socketInfo: {
         isSocketConnect: false,
-        heartBeatTime: 25000,
+        heartBeatTime: 120000,
         loginCheckTime: 120000,
         url: "wss://api.koudaibook.com/smart-iot/webSocket/",
         // url: "wss://10.32.33.151:5388/smart-iot/webSocket/",
@@ -65,7 +65,7 @@ App({
     initEventHandler: function () {
         var that = this
         wx.onSocketOpen((result) => {
-            that.startHeart()
+            // that.startHeart()
         })
         wx.onSocketClose((res) => {
             if (that.socketInfo.isSocketConnect) {
@@ -78,22 +78,22 @@ App({
         })
     },
 
-    startHeart: function () {
-        if (this.socketInfo.isSocketConnect) {
-            this.socketInfo.socketHeartTimer = setInterval(() => {
-                var msg = JSON.stringify({
-                    'data': 'ping'
-                })
-                wx.sendSocketMessage({
-                    data: msg,
-                    success: function (res) { },
-                    fail: function (res) { }
-                })
-            }, this.socketInfo.heartBeatTime)
-        } else {
-            clearTimeout(this.socketInfo.socketHeartTimer)
-        }
-    },
+    // startHeart: function () {
+    //     if (this.socketInfo.isSocketConnect) {
+    //         this.socketInfo.socketHeartTimer = setInterval(() => {
+    //             var msg = JSON.stringify({
+    //                 'data': 'ping'
+    //             })
+    //             wx.sendSocketMessage({
+    //                 data: msg,
+    //                 success: function (res) { },
+    //                 fail: function (res) { }
+    //             })
+    //         }, this.socketInfo.heartBeatTime)
+    //     } else {
+    //         clearTimeout(this.socketInfo.socketHeartTimer)
+    //     }
+    // },
 
     doSocketCloseFunction: function () {
         if (this.socketInfo.isSocketConnect) {
