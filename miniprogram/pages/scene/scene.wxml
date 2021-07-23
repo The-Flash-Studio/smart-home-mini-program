@@ -2,6 +2,35 @@
 <import src="./templates/header.wxml"></import>
 <view class="tab_box">
   <template is="index_header" data="{{...houseList}}" />
+  <van-cell
+    title="查看设备详情"
+    center
+    clickable
+    size="large"
+    custom-class="scene_item_container common_shadow2"
+    title-class="scene_title"
+    use-label-slot="true"
+    bind:click="gotoSceneDetail"
+    data-item="{{}}"
+  >
+    <van-icon
+      custom-class="scene_icon"
+      slot="icon"
+      name="setting-o"
+      color="blue"
+      size="28px"
+    />
+    <view slot="label" class="scene_label">水浸传感器</view>
+    <view
+      slot="right-icon"
+      catchtap="gotoSceneDetail"
+      data-item="{{}}"
+    >
+      <text class="scene_right_text">详情</text>
+      <van-icon name="arrow" color="gray" />
+    </view>
+
+  </van-cell>
 
   <van-cell
     title="删除一个房子"
