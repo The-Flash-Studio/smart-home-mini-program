@@ -1,10 +1,5 @@
 /* miniprogram/pages/scene/scene.wxss */
 @import "./templates/header.wxss";
-/* tab_style */
-.tab_box {
-  width: 100vw;
-  height: 100vh;
-}
 
 .scene_type {
   font-size: 30px !important;

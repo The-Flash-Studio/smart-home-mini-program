@@ -1,8 +1,5 @@
 "use strict";
-// import baseUrl from './config'
 import commonRequestFunction from './index'
-let baseUrl = 'http://10.32.33.151:5388/'
-let app = getApp();
 /**
  * Device相关暂时无用，均使用gatewayApi、houseApi中接口
  * @param {*} deviceId 

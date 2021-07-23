@@ -1,6 +1,6 @@
 <!--miniprogram/pages/scene/scene.wxml-->
 <import src="./templates/header.wxml"></import>
-<view class="tab_box">
+<view class="flex_column_box">
   <template is="index_header" data="{{...houseList}}" />
   <van-cell
     title="查看设备详情"
