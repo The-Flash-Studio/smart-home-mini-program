@@ -15,7 +15,10 @@ Page({
         roomList:[],
         devicesList:[],
         showPopup:false,
-        popupContent:null
+        popupContent:null,
+        showOverlay:false,
+        overlayContent:null,
+        houseIdRadio:0
     }, 
     onLoad: function () {
         let _this = this,
@@ -23,8 +26,7 @@ Page({
 
         // 存在Token
         if(user_token){
-            // console.log('token:',user_token)
-            _this.fetchData()
+            _this.fetchData(null,user_token)
         }
         // 不存在Token
         else{
@@ -42,14 +44,14 @@ Page({
                             key:"user_token",
                             data:_token
                         })
-                        _this.fetchData()
+                        _this.fetchData(null,_token)
                     })
                 }
             });
         }
     },  
 
-    fetchData: function(house_id){
+    fetchData: function(house_id,token){
         let _this = this
         _this.setData({
             houseList:[],
@@ -61,7 +63,7 @@ Page({
             userId:null
         })
 
-        // queryHouseByUser({},{},(e)=>{
+        // queryHouseByUser({token:token.token},{},(e)=>{
         //     console.log(e);
         // })
 
@@ -69,7 +71,7 @@ Page({
         houseQueryAll((e)=>{
             const data = e.data.data;
             const {houseList,userId} = data
-
+            
             let curr_house_id = house_id ? house_id : wx.getStorageSync('curr_house_id');
             if(!curr_house_id || house_id){
                 curr_house_id = house_id ? house_id : houseList[0].id
@@ -80,6 +82,7 @@ Page({
             }
             const currHouseData = houseList.filter(e=>e.id===curr_house_id)[0];
             const houseNameList = houseList.map(e=>e.name)
+            console.log('--- 当前房子 ---',currHouseData)
 
             // 获取当前房子的房间列表
             queryRoomsByHouseId(curr_house_id,(e)=>{
@@ -100,6 +103,7 @@ Page({
                         roomList,
                         devicesList,
                         userId,
+                        houseIdRadio:currHouseData.id
                     },()=>{
                         _this.selectComponent('#tabs').resize();
                     })
@@ -162,6 +166,14 @@ Page({
         // })
     },
 
+    // 配置选项
+    onConfigClick: function(e) {
+        const { id } = e.currentTarget.dataset;
+        this.setData({
+            houseIdRadio:id
+        })
+    },
+
     // 切换房子
     onHounseChange:function(e){
         this.selectComponent('#tabs').resize();
@@ -175,6 +187,7 @@ Page({
     onPopupOpen:function(e){
         const { popupcontent } = e.currentTarget.dataset
         const popupContent = popupcontent ? popupcontent : null
+        console.log('popupContent:',popupContent)
         this.setData({
             showPopup:true,
             popupContent
@@ -187,5 +200,24 @@ Page({
             showPopup:false,
             popupContent:null
         })
-    }
+    },
+
+    // 打开overlay
+    onOverlayOpen:function(e){
+        const { overlaycontent } = e.currentTarget.dataset
+        const overlayContent = overlaycontent ? overlaycontent : null
+        console.log('popupContent:',overlayContent)
+        this.setData({
+            showOverlay:true,
+            overlayContent
+        })
+    },
+
+    // 关闭overlay
+    onOverlayClose: function(){
+        this.setData({
+            showOverlay:false,
+            overlayContent:null
+        })
+    },
 });

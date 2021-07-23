@@ -54,6 +54,9 @@
     "van-nav-bar": "@vant/weapp/nav-bar/index",
     "van-checkbox": "@vant/weapp/checkbox/index",
     "van-steps": "@vant/weapp/steps/index",
-    "van-tag": "@vant/weapp/tag/index"
+    "van-tag": "@vant/weapp/tag/index",
+    "van-radio": "@vant/weapp/radio/index",
+    "van-radio-group": "@vant/weapp/radio-group/index",
+    "van-overlay": "@vant/weapp/overlay/index"
   }
 }

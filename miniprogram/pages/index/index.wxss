@@ -34,6 +34,50 @@
   padding:10rpx;
   border-radius: 30rpx;
   margin-left: 15rpx;
+  margin-right: 25rpx;
+}
+.management_add {
+  margin-left: 20rpx;
+  border-radius: 30rpx;
+  border: #999 solid 1rpx;
+  padding: 0rpx 15rpx 0 10rpx;
+  height: 40rpx;
+}
+.management_add_text {
+  color: #999;
+  font-size: 25rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+
+/* management */
+.management_container{
+  padding:50rpx 30rpx;
+}
+.management_title_box{
+  padding:20rpx 0rpx 50rpx 0rpx;
+}
+.management_title_text{
+  font-size: 48rpx;
+  color:#5785e7;
+  margin-left: 10rpx;
+  font-weight: 700;
+}
+.management_button_box {
+  height: 100rpx;
+  width: 690rpx;
+  padding: 20rpx 0rpx;
+  box-sizing: border-box;
+  margin-top: 30rpx;
+}
+.management_button {
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 32rpx;
+  color: #fff;
+  border-radius: 10rpx;
+  padding:0 20rpx;
+  margin-left: 20rpx;
 }
 
 /* extra_line */

@@ -1,6 +1,7 @@
 <import src="./templates/header.wxml"></import>
 <import src="./templates/cardItem.wxml"></import>
 <import src="./templates/changeHouse.wxml"></import>
+<import src="./templates/management.wxml"></import>
 
 <view class="tab_box common_bg_color">
   <!-- Header -->
@@ -40,9 +41,16 @@
     round="true"
     >
     <template wx:if="{{popupContent  === 'changeHouse'}}" is="changeHouse" data="{{houseNameList}}"/>
+    <template wx:if="{{popupContent  === 'management'}}" is="management" data="{{houseList,houseIdRadio}}"/>
   </van-popup>
 
+  <!-- toast -->
   <van-toast id="van-toast" />
+
+  <!-- overlay -->
+  <van-overlay show="{{ showOverlay }}" bind:click="onOverlayClose" >
+    hhh
+  </van-overlay>
 </view>
 
 

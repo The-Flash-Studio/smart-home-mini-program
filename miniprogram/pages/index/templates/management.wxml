@@ -1,0 +1,29 @@
+<template name="management">
+    <view class="management_container">
+      <!-- Title -->
+      <view class="management_title_box flex_row_start_center">
+        <van-icon name="home-o" size="25" color="#FF8691"/>
+        <text class="management_title_text">我的房子</text>
+        <view class="flex_row_start_center management_add" bindtap="onOverlayOpen">
+          <van-icon name="plus" size="12" color="#999"/>
+          <text class="management_add_text">添加</text>
+        </view>
+      </view>
+      <!-- List -->
+      <van-radio-group value="{{houseIdRadio}}">
+        <van-cell-group inset>
+          <block wx:for="{{houseList}}" wx:key="index">
+            <van-cell title="{{item.name}}" clickable data-id="{{item.id}}" bind:click="onConfigClick">
+              <van-radio slot="right-icon" name="{{item.id}}" />
+            </van-cell>
+          </block>
+        </van-cell-group>
+      </van-radio-group>
+      <!-- Button -->
+      <view class="management_button_box flex_row_end">
+        <view class="management_button" style="background-color:#1889FA">房间信息</view>
+        <view class="management_button" style="background-color:#0FC160" bindtap="onOverlayOpen">修改</view>
+        <view class="management_button" style="background-color:#EE0824">删除</view>
+      </view>
+    </view>
+</template>
