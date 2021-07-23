@@ -6,6 +6,9 @@ import queryHouseByUser from './device-status-controller/queryHouseByUser'
 import houseQueryAll from './device-status-controller/houseQueryAll'
 import roomQueryAll from './device-status-controller/roomQueryAll'
 import gatewayQueryAll from './device-status-controller/gatewayQueryAll'
+import queryRoomsByHouseId from './device-status-controller/queryRoomsByHouseId'
+import findDevicesByRoomId from './device-status-controller/findDevicesByRoomId'
+
 import baseUrl from "./config";
 const TOKEN_NAME = "__token__";
 const CUSTOM_INTERNAL_ERROR_CODE = -999;
@@ -17,6 +20,8 @@ export {
   houseQueryAll,             //当前房子集合（用于测试）
   roomQueryAll,              //当前房间集合（用于测试）
   gatewayQueryAll,           //当前网关组（用于测试）
+  queryRoomsByHouseId,       //根据房子ID获取所属所有房间信息
+  findDevicesByRoomId,       //根据房间ID获取设备信息
   isLoginCheck
 }
 

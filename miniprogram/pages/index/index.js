@@ -1,7 +1,7 @@
 "use strict";
 var app = getApp();
-import { wechatLogin,houseQueryAll,roomQueryAll,gatewayQueryAll } from '../../api/index'
-import { queryDevicesByGatewayId,sendCommand } from '../../api/gatewayApi'
+import { wechatLogin,houseQueryAll,queryRoomsByHouseId,findDevicesByRoomId,queryHouseByUser } from '../../api/index'
+import { sendCommand } from '../../api/gatewayApi'
 import { updateDeviceInfo } from '../../api/devcieApi'
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 
@@ -11,9 +11,11 @@ Page({
         houseList:[],
         houseNameList:[],
         currHouseData:null,
+        currRoomData:null,
         roomList:[],
         devicesList:[],
         showPopup:false,
+        popupContent:null
     }, 
     onLoad: function () {
         let _this = this,
@@ -53,9 +55,15 @@ Page({
             houseList:[],
             houseNameList:[],
             currHouseData:null,
+            currRoomData:null,
             roomList:[],
             devicesList:[],
+            userId:null
         })
+
+        // queryHouseByUser({},{},(e)=>{
+        //     console.log(e);
+        // })
 
         // 当前房子集合（用于测试）
         houseQueryAll((e)=>{
@@ -73,43 +81,44 @@ Page({
             const currHouseData = houseList.filter(e=>e.id===curr_house_id)[0];
             const houseNameList = houseList.map(e=>e.name)
 
-            this.setData({
-                houseList,
-                userId,
-                currHouseData,
-                houseNameList
-            })
-            console.log(currHouseData)
-            
-            // 当前房间集合（用于测试）
-            roomQueryAll((e)=>{
-                const data = e.data.data;
-                const {roomList} = data;
-                console.log(roomList)
-                _this.setData({roomList})
+            // 获取当前房子的房间列表
+            queryRoomsByHouseId(curr_house_id,(e)=>{
+                const {roomList = []} = e.data.data;
+                const currRoomData = roomList.length>0 ? roomList[0] : {};
+                console.log('--- 当前房间 ---',currRoomData)
+                const {id:roomId} = currRoomData
 
-                // 查询网关下设备列表
-                queryDevicesByGatewayId({id:30},(e)=>{
-                    const {devices:devicesList} = e;
-                    console.log(devicesList)
+                // 获取当前房间的设备列表
+                findDevicesByRoomId(roomId,(e)=>{
+                    const devicesList = e.data.data;
+                    console.log('--- 当前设备 ---',devicesList)
                     _this.setData({
-                        devicesList
+                        houseList,
+                        houseNameList,
+                        currHouseData,
+                        currRoomData,
+                        roomList,
+                        devicesList,
+                        userId,
+                    },()=>{
+                        _this.selectComponent('#tabs').resize();
                     })
                 })
-
-
             })
         })
     },
 
-    // 切换标签
+    // 切换房间
     onChange: function (e) {
-        // 查询网关下设备列表
-        queryDevicesByGatewayId({id:30},(e)=>{
-            const {devices:devicesList} = e;
-            console.log(devicesList)
-            this.setData({
-                devicesList
+        const _this = this;
+        const {index=0} = e.detail;
+        const {id:roomId} = this.data.roomList[index]
+        // 获取当前房间的设备列表
+        findDevicesByRoomId(roomId,(e)=>{
+            const devicesList = e.data.data;
+            console.log('--- 当前设备列表 ---',devicesList)
+            _this.setData({devicesList},()=>{
+                _this.selectComponent('#tabs').resize();
             })
         })
     },
@@ -146,15 +155,16 @@ Page({
 
     // 添加设备
     clickToAddDevice: function(e){
-        wx.scanCode({
-            success (res) {
-                console.log(res)
-            }
-        })
+        // wx.scanCode({
+        //     success (res) {
+        //         console.log(res)
+        //     }
+        // })
     },
 
     // 切换房子
     onHounseChange:function(e){
+        this.selectComponent('#tabs').resize();
         const changedHouseInfo = this.data.houseList[e.detail.index]
         const {id} = changedHouseInfo;
         this.fetchData(id);
@@ -162,16 +172,20 @@ Page({
     },
 
     // 打开popup
-    onPopupOpen:function(){
+    onPopupOpen:function(e){
+        const { popupcontent } = e.currentTarget.dataset
+        const popupContent = popupcontent ? popupcontent : null
         this.setData({
-            showPopup:true
+            showPopup:true,
+            popupContent
         })
     },
 
     // 关闭popup
-    onPopupClose: function(e){
+    onPopupClose: function(){
         this.setData({
-            showPopup:false
+            showPopup:false,
+            popupContent:null
         })
     }
 });

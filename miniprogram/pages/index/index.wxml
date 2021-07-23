@@ -19,8 +19,9 @@
     swipe-threshold="3"
     lazy-render="true"
     ellipsis="false"
+    id="tabs"
     >
-    <block wx:for="{{houseList}}" wx:for-item="tab_item" wx:for-index="tab_idx" wx:key="tab_idx">
+    <block wx:for="{{roomList}}" wx:for-item="tab_item" wx:for-index="tab_idx" wx:key="tab_idx">
       <van-tab title="{{tab_item.name}}">
         <view class="tab_content_container">
           <block wx:for="{{devicesList}}" wx:key="index">
@@ -38,7 +39,7 @@
     position="bottom"
     round="true"
     >
-    <template is="changeHouse" data="{{houseNameList}}"/>
+    <template wx:if="{{popupContent  === 'changeHouse'}}" is="changeHouse" data="{{houseNameList}}"/>
   </van-popup>
 
   <van-toast id="van-toast" />
