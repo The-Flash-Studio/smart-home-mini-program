@@ -17,21 +17,24 @@
     />
   </van-nav-bar>
 
-  <van-steps
+  <!-- <van-steps
     steps="{{steps}}"
     active="{{stepsActive}}"
     active-color="#38f"
-  />
+  /> -->
   <!-- 基础信息 状态 -->
   <text style="font-size:30rpx; color: #999; margin-left: 10px;">状态</text>
+  <van-cell title=" 描述">
+        {{deviceInfo.description}}
+  </van-cell>
   <!-- deviceInfo.powerSource  -->
   <van-cell title=" 电源">
-    <van-icon
+    <!-- <van-icon
       slot="icon"
       name="cluster-o"
       color="#999"
       size="18px"
-    />
+    /> -->
     <block wx:if="{{deviceInfo.powerSource=='true'}}">
       <van-tag
         round
@@ -57,7 +60,9 @@
 
     </block>
   </van-cell>
-
+  <van-cell title=" 更新时间（upTime）">
+        {{deviceInfo.upTime}}
+  </van-cell>
   <!-- <van-checkbox
     value="{{ currentCheckValue }}"
     icon-size="20px"
@@ -98,7 +103,7 @@
 
   <view class="confirm-button-container">
 
-    <van-button
+    <!-- <van-button
       type="primary"
       size="large"
       round
@@ -107,7 +112,7 @@
       custom-class="confirm-button"
     >
       保存设置
-    </van-button>
+    </van-button> -->
   </view>
 
 </view>

@@ -13,6 +13,7 @@
     bind:click="gotoSceneDetail"
     data-item="{{}}"
   >
+
     <van-icon
       custom-class="scene_icon"
       slot="icon"
@@ -31,6 +32,7 @@
     </view>
 
   </van-cell>
+  <block wx:if="{{isDebug}}">
 
   <van-cell
     title="删除一个房子"
@@ -109,6 +111,7 @@
     use-label-slot="true"
     bind:click="doAddDevice"
   />
+</block>
   <block
     wx:for="{{sceneTypeList}}"
     wx:for-item="tab_item"
