@@ -10,7 +10,7 @@ Page({
     nickName:"",
   },
   onLoad(options) {
-    let {houseId,roomId} = options;
+    let {houseId,roomId,gatewayId} = options;
     houseId = 24;
     roomId = 22;
     this.doPrepareDevice(houseId,roomId);
