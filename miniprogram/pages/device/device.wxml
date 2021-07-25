@@ -1,4 +1,4 @@
-<view class="page-box">
+<view class="flex_column_box page-padding">
 
   <van-nav-bar
     title="{{deviceInfo.nickName}}"
@@ -7,10 +7,11 @@
     left-arrow
     bind:click-left="onClickLeft"
     bind:click-right="onClickRight"
-    custom-style="nav-bar"
+    custom-style="page-nav-bar"
+    title-class="page-title"
   >
     <van-icon
-      name="delete"
+      name="delete-o"
       size="20"
       slot="right"
     />
@@ -21,12 +22,14 @@
     active="{{stepsActive}}"
     active-color="#38f"
   />
-  <!-- 基础信息 deviceInfo.powerSource -->
+  <!-- 基础信息 状态 -->
+  <text style="font-size:30rpx; color: #999; margin-left: 10px;">状态</text>
+  <!-- deviceInfo.powerSource  -->
   <van-cell title=" 电源">
     <van-icon
       slot="icon"
       name="cluster-o"
-      color="blue"
+      color="#999"
       size="18px"
     />
     <block wx:if="{{deviceInfo.powerSource=='true'}}">
@@ -45,27 +48,26 @@
       <van-tag
         round
         plain
-        type="danger"
+        type="warning"
         size="medium"
       >
         <van-icon name="fail" color="red" />
-        异常
+        断开
       </van-tag>
 
     </block>
   </van-cell>
 
-  <view class="checkbox-container">
-    <!-- <van-checkbox
-      value="{{ currentCheckValue }}"
-      icon-size="20px"
-      shape="square"
-      checked-color="#07c160"
-      bind:change="onCheckChange"
-    >
-      关闭
-    </van-checkbox> -->
-  </view>
+  <!-- <van-checkbox
+    value="{{ currentCheckValue }}"
+    icon-size="20px"
+    shape="square"
+    checked-color="#07c160"
+    bind:change="onCheckChange"
+    custom-class="device-checkbox"
+  >
+    关闭
+  </van-checkbox> -->
 
   <!-- <van-slider
     value="{{ currentValue }}"
@@ -88,8 +90,10 @@
       text="水量"
       color="{{circleGradientColor}}"
       layer-color="#eeeeee"
+      z-index="-1"
     /> -->
   </view>
+
   <!-- van-circle fill="antiquewhite" 该属性会挡住文字-->
 
   <view class="confirm-button-container">
@@ -100,6 +104,7 @@
       round
       loading="{{isRequesting}}"
       bind:click="onConfirmSet"
+      custom-class="confirm-button"
     >
       保存设置
     </van-button>

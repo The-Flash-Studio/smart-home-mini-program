@@ -1,8 +1,6 @@
 "use strict";
-// import baseUrl from './config'
+
 import commonRequestFunction from './index'
-let baseUrl = 'http://10.32.33.151:5388/'
-let app = getApp();
 /**
  * Device相关暂时无用，均使用gatewayApi、houseApi中接口
  * @param {*} deviceId 
@@ -34,10 +32,6 @@ export function getDeviceById(requestObj = {}, successCallback, failCallback) {
   commonRequestFunction('smart-iot/device/findById', requestObj, successCallback, failCallback)
 }
 
-export function findDevicesByRoomId(id=0,successCallback,failCallback){
-  console.log("findDevicesByRoomId-> " + id)
-  commonRequestFunction('smart-iot/device/findDevicesByRoomId', {id}, successCallback, failCallback)
-}
 
 /**
  * 测试用

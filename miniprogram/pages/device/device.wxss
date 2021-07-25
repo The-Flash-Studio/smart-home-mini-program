@@ -1,18 +1,18 @@
 /* tab_style */
-.page-box {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  padding-top: 40px;
-  flex-direction: column;
+.page-padding {
+  padding: 30px 0rpx 0 0rpx;
 }
-.nav-bar{
+.page-nav-bar{
   margin-top: 50px;
+}
+.page-title{
+  font-size: 40rpx !important;
+  font-weight: bolder;
 }
 .step-class{
   margin: 10px;
 }
-.checkbox-container{
+.device-checkbox{
   margin-top: 15px;
   display: flex;
   justify-content: center;
@@ -43,10 +43,15 @@
 }
 
 .confirm-button-container{
-  margin-left: 50px;
-  margin-right: 50px;
-  width: 75vw;
-  position:fixed;
-  align-items: center;
-  bottom: 80px;
+	margin-bottom:40px;
+	width:80vw;
+	position:fixed;
+	bottom:0px;
+	display:flex;
+  align-self: center;
+	justify-content:center;
+}
+.confirm-button{
+	width:80vw !important;
+  color: "#7232dd";
 }
