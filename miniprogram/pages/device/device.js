@@ -1,6 +1,7 @@
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 Page({
   data: {
+    props:{},
     houseId: 0,
     houseName: "梅川路",
     roomId: 0,
@@ -137,7 +138,16 @@ Page({
     requestTask: '',
   },
 
-  onLoad: function () {
+  onLoad: function (options) {
+    if(options.props){
+      this.setData({
+        props:JSON.parse(options.props) 
+      })
+      console.log("1 "+this.data.props.houseId)
+      console.log("2 "+this.data.props.gatewayId)
+      console.log("3 "+this.data.props.roomId)
+      console.log("4 "+this.data.props.deviceId)
+    }
     this.makeUpSteps();
   },
 

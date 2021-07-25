@@ -176,7 +176,6 @@ Page({
         const {id:houseId,gatewayId=[]} = currHouseData;
         const {id:roomId} = currRoomData;
         const {deviceid} = e.currentTarget.dataset
-        Toast.success('跳转至设备详情页，deviceid：'+deviceid)
         const props = {
             houseId,
             gatewayId:gatewayId,
@@ -184,7 +183,7 @@ Page({
             deviceId:deviceid
         }
         wx.navigateTo({
-            url: `/pages/device/device/?props=${JSON.stringify(props)}`,
+            url: `/pages/device/device?props=${JSON.stringify(props)}`,
         })
     },
 

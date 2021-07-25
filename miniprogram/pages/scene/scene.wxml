@@ -2,7 +2,9 @@
 <import src="./templates/header.wxml"></import>
 <view class="flex_column_box">
   <template is="index_header" data="{{...houseList}}" />
-  <van-cell
+  
+  <block wx:if="{{isDebug}}">
+    <van-cell
     title="查看设备详情"
     center
     clickable
@@ -32,8 +34,6 @@
     </view>
 
   </van-cell>
-  <block wx:if="{{isDebug}}">
-
   <van-cell
     title="删除一个房子"
     center
