@@ -184,7 +184,7 @@ Page({
             deviceId:deviceid
         }
         wx.navigateTo({
-            url: `/pages/device//device/?props=${JSON.stringify(props)}`,
+            url: `/pages/device/device/?props=${JSON.stringify(props)}`,
         })
     },
 
