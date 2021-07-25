@@ -2,6 +2,7 @@
 <import src="./templates/cardItem.wxml"></import>
 <import src="./templates/changeHouse.wxml"></import>
 <import src="./templates/management.wxml"></import>
+<import src="./templates/setting.wxml"></import>
 
 <view class="tab_box common_bg_color">
   <!-- Header -->
@@ -28,6 +29,9 @@
           <block wx:for="{{devicesList}}" wx:key="index">
             <template is="cardItem" data="{{...item}}"/>
           </block>
+          <view class="addDevice_box flex_row_end" bindtap="addDevice">
+            <view class="addDevice_btn">添加设备</view>
+          </view>
         </view>
       </van-tab>
     </block>
@@ -40,17 +44,23 @@
     position="bottom"
     round="true"
     >
-    <template wx:if="{{popupContent  === 'changeHouse'}}" is="changeHouse" data="{{houseNameList}}"/>
-    <template wx:if="{{popupContent  === 'management'}}" is="management" data="{{houseList,houseIdRadio}}"/>
+    <template wx:if="{{popupContent  === 'changeHouse'}}" is="changeHouse" data="{{houseNameList,houseIndexRadio}}"/>
+    <template wx:if="{{popupContent  === 'houseSetting' || popupContent === 'roomSetting'}}" is="management" data="{{...managementComConfig}}"/>
+  </van-popup>
+  <van-popup 
+    show="{{ showOverlay }}"
+    bind:close="onOverlayClose"
+    position="bottom"
+    round="true"
+    >
+    <template wx:if="{{overlayContent  === 'update' || overlayContent === 'add'}}" is="setting" data="{{overlayContent,houseIdRadio,roomIdRadio,settingComConfig,showConfirmBtn}}"/>
   </van-popup>
 
   <!-- toast -->
   <van-toast id="van-toast" />
-
-  <!-- overlay -->
-  <van-overlay show="{{ showOverlay }}" bind:click="onOverlayClose" >
-    hhh
-  </van-overlay>
+  
+  <!-- dialog -->
+  <van-dialog id="van-dialog" />
 </view>
 
 

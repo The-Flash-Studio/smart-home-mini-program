@@ -1,6 +1,6 @@
 <!-- 卡片 -->
 <template name="cardItem">
-  <view class="equp_card_box common_shadow flex_column_space">
+  <view class="equp_card_box common_shadow flex_column_space" bindtap="jumpToDevicePage" data-deviceid="{{id}}">
     <!-- 家电图标 -->
     <text wx:if="{{nickName==='智能门锁'}}" class="iconfont icon-yaokongqi" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>
     <text wx:elif="{{nickName==='智能空调'}}" class="iconfont icon-kongtiao" style="font-size:60rpx;color:rgb(74, 123, 247)"></text>

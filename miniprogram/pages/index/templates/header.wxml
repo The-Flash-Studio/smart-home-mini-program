@@ -6,7 +6,7 @@
         <text class="title_text text_overflow_one">{{currHouseData.name}}</text>
         <text class="iconfont icon-jiantou" style="font-size:10px"></text>
       </view>
-      <view class="icon_box flex_row_center" bindtap="onPopupOpen" data-popupContent="management">
+      <view class="icon_box flex_row_center" bindtap="onPopupOpen" data-popupContent="houseSetting">
         <van-icon name="setting-o" size="18"/>
       </view>
     </view>

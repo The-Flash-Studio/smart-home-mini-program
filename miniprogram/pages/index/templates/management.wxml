@@ -3,27 +3,28 @@
       <!-- Title -->
       <view class="management_title_box flex_row_start_center">
         <van-icon name="home-o" size="25" color="#FF8691"/>
-        <text class="management_title_text">我的房子</text>
-        <view class="flex_row_start_center management_add" bindtap="onOverlayOpen">
+        <text class="management_title_text">{{type === 'house' ? '我的房子' : '我的房间'}}</text>
+        <view class="flex_row_start_center management_add" bindtap="onOverlayOpen" data-overlaycontent="add">
           <van-icon name="plus" size="12" color="#999"/>
-          <text class="management_add_text">添加</text>
+          <text class="management_add_text">{{type === 'house' ? '添加房子' : '添加房间'}}</text>
         </view>
       </view>
       <!-- List -->
-      <van-radio-group value="{{houseIdRadio}}">
+      <van-radio-group value="{{radioId}}">
         <van-cell-group inset>
-          <block wx:for="{{houseList}}" wx:key="index">
-            <van-cell title="{{item.name}}" clickable data-id="{{item.id}}" bind:click="onConfigClick">
+          <block wx:for="{{contentList}}" wx:key="index">
+            <van-cell title="{{item.name}}" clickable data-id="{{item.id}}" data-type="{{type}}" bind:click="onConfigClick">
               <van-radio slot="right-icon" name="{{item.id}}" />
             </van-cell>
           </block>
         </van-cell-group>
       </van-radio-group>
       <!-- Button -->
-      <view class="management_button_box flex_row_end">
-        <view class="management_button" style="background-color:#1889FA">房间信息</view>
-        <view class="management_button" style="background-color:#0FC160" bindtap="onOverlayOpen">修改</view>
-        <view class="management_button" style="background-color:#EE0824">删除</view>
+      <view class="management_button_box flex_row_end" wx:if="{{contentList.length>0}}">
+        <view wx:if="{{type === 'house'}}" class="management_button" style="background-color:#FF976A" bindtap="scanToConnectGateway">关联网关</view>
+        <view wx:if="{{type === 'house'}}" class="management_button" style="background-color:#1889FA" bindtap="onPopupOpen" data-popupContent="roomSetting">房间信息</view>
+        <view class="management_button" style="background-color:#0FC160" bindtap="onOverlayOpen" data-type="{{type}}" data-overlaycontent="update">修改</view>
+        <view class="management_button" style="background-color:#EE0824" bindtap="deleteHouseOrRoom">删除</view>
       </view>
     </view>
 </template>

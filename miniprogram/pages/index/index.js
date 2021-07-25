@@ -1,9 +1,11 @@
 "use strict";
 var app = getApp();
-import { wechatLogin,houseQueryAll,queryRoomsByHouseId,findDevicesByRoomId,queryHouseByUser } from '../../api/index'
 import { sendCommand } from '../../api/gatewayApi'
-import { updateDeviceInfo } from '../../api/devcieApi'
+import { updateDeviceInfo,findDevicesByRoomId } from '../../api/devcieApi'
+import { queryHouseByUser,update as updateHouse,getHouseByHouseId,addHouse,removeHouse } from '../../api/houseApi'
+import { queryRoomsByHouseId,getRoomByRoomId,addRoom,updateRoom,removeRoom } from '../../api/roomApi'
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
+import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 Page({
     data: {
@@ -18,41 +20,21 @@ Page({
         popupContent:null,
         showOverlay:false,
         overlayContent:null,
-        houseIdRadio:0
+        houseIdRadio:-1,
+        roomIdRadio:-1,
+        houseIndexRadio:0,
+        managementComConfig:null,
+        settingComConfig:null,
+        showConfirmBtn:false
     }, 
     onLoad: function () {
-        let _this = this,
-            user_token = wx.getStorageSync('user_token');
-
-        // 存在Token
-        if(user_token){
-            _this.fetchData(null,user_token)
-        }
-        // 不存在Token
-        else{
-            // 获取用户信息
-            wx.login({
-                success: function (res) {
-                    const userCode = res.code;
-                    app.userCode = userCode;
-                    // 微信登录
-                    wechatLogin({
-                        params:userCode
-                    },(res)=>{
-                        const {data:_token} = res.data;
-                        !!_token && wx.setStorage({
-                            key:"user_token",
-                            data:_token
-                        })
-                        _this.fetchData(null,_token)
-                    })
-                }
-            });
-        }
+        this.fetchData()
     },  
 
-    fetchData: function(house_id,token){
+    // 获取数据
+    fetchData: function(house_id){
         let _this = this
+        // 初始化data
         _this.setData({
             houseList:[],
             houseNameList:[],
@@ -63,15 +45,11 @@ Page({
             userId:null
         })
 
-        // queryHouseByUser({token:token.token},{},(e)=>{
-        //     console.log(e);
-        // })
-
-        // 当前房子集合（用于测试）
-        houseQueryAll((e)=>{
-            const data = e.data.data;
-            const {houseList,userId} = data
+        // 当前房子集合
+        queryHouseByUser((e)=>{
+            const {houseList,userId} = e
             
+            let houseIndexRadio = 0;
             let curr_house_id = house_id ? house_id : wx.getStorageSync('curr_house_id');
             if(!curr_house_id || house_id){
                 curr_house_id = house_id ? house_id : houseList[0].id
@@ -81,19 +59,22 @@ Page({
                 })
             }
             const currHouseData = houseList.filter(e=>e.id===curr_house_id)[0];
-            const houseNameList = houseList.map(e=>e.name)
+            const houseNameList = houseList.map((e,i)=>{
+                if(e.id===curr_house_id) houseIndexRadio = i;
+                return e.name
+            })
             console.log('--- 当前房子 ---',currHouseData)
 
             // 获取当前房子的房间列表
             queryRoomsByHouseId(curr_house_id,(e)=>{
-                const {roomList = []} = e.data.data;
+                const {roomList = []} = e;
                 const currRoomData = roomList.length>0 ? roomList[0] : {};
                 console.log('--- 当前房间 ---',currRoomData)
                 const {id:roomId} = currRoomData
 
                 // 获取当前房间的设备列表
                 findDevicesByRoomId(roomId,(e)=>{
-                    const devicesList = e.data.data;
+                    const devicesList = e;
                     console.log('--- 当前设备 ---',devicesList)
                     _this.setData({
                         houseList,
@@ -103,13 +84,23 @@ Page({
                         roomList,
                         devicesList,
                         userId,
-                        houseIdRadio:currHouseData.id
+                        houseIdRadio:currHouseData.id,
+                        houseIndexRadio
                     },()=>{
                         _this.selectComponent('#tabs').resize();
                     })
                 })
             })
         })
+    },
+
+    // 切换房子
+    onHounseChange:function(e){
+        this.selectComponent('#tabs').resize();
+        const changedHouseInfo = this.data.houseList[e.detail.index]
+        const {id} = changedHouseInfo;
+        this.fetchData(id);
+        this.onPopupClose()
     },
 
     // 切换房间
@@ -119,7 +110,7 @@ Page({
         const {id:roomId} = this.data.roomList[index]
         // 获取当前房间的设备列表
         findDevicesByRoomId(roomId,(e)=>{
-            const devicesList = e.data.data;
+            const devicesList = e;
             console.log('--- 当前设备列表 ---',devicesList)
             _this.setData({devicesList},()=>{
                 _this.selectComponent('#tabs').resize();
@@ -148,7 +139,7 @@ Page({
                 this.setData({
                     devicesList:newDvicesList
                 })
-            },(err)=>{
+            },()=>{
                 Toast.fail('状态切换失败');
             })
         // },(err)=>{
@@ -158,36 +149,229 @@ Page({
     },
 
     // 添加设备
-    clickToAddDevice: function(e){
-        // wx.scanCode({
-        //     success (res) {
-        //         console.log(res)
-        //     }
-        // })
+    addDevice: function(e){
+        const _this = this;
+        const {currHouseData={},currRoomData={}} = this.data;
+        const {id:houseId,gatewayId=[]} = currHouseData;
+        const {id:roomId} = currRoomData;
+        if(typeof houseId === 'number' && gatewayId.length>0 && typeof roomId === 'number'){
+            // 跳转至添加设备页
+            const props = {
+                houseId,
+                gatewayId:gatewayId[0],
+                roomId,
+            }
+            wx.navigateTo({
+              url: 'pages/addDevice/addDevice?props='+JSON.stringify(props),
+            })
+        }else{
+            // 关联网关
+            _this.scanToConnectGateway()
+        }
     },
 
-    // 配置选项
-    onConfigClick: function(e) {
-        const { id } = e.currentTarget.dataset;
-        this.setData({
-            houseIdRadio:id
+    // 跳转至设备详情页
+    jumpToDevicePage: function(e) {
+        const {currHouseData={},currRoomData={}} = this.data;
+        const {id:houseId,gatewayId=[]} = currHouseData;
+        const {id:roomId} = currRoomData;
+        const {deviceid} = e.currentTarget.dataset
+        Toast.success('跳转至设备详情页，deviceid：'+deviceid)
+        const props = {
+            houseId,
+            gatewayId:gatewayId,
+            roomId,
+            deviceId:deviceid
+        }
+        wx.navigateTo({
+            url: `/pages/device/device/?props=${JSON.stringify(props)}`,
         })
     },
 
-    // 切换房子
-    onHounseChange:function(e){
-        this.selectComponent('#tabs').resize();
-        const changedHouseInfo = this.data.houseList[e.detail.index]
-        const {id} = changedHouseInfo;
-        this.fetchData(id);
-        this.onPopupClose()
+    // 扫码关联网关
+    scanToConnectGateway: function(){
+        const _this = this;
+        const {currHouseData} = this.data;
+        Dialog.confirm({
+            title: currHouseData.name,
+            message: `关联网关`,
+        }).then(() => {
+            wx.scanCode({
+                success (res) {
+                    const params = Object.assign(currHouseData,{
+                        gatewayId:!!currHouseData.gatewayId ? currHouseData.gatewayId.unshift(res) : [res]
+                    })
+                    updateHouse(params,()=>{
+                        Toast.success(`【${currHouseData.name}】关联网关成功`);
+                        _this.fetchData(currHouseData.id)
+                    },()=>{
+                        Toast.fail('关联网关失败');
+                    })
+                }
+            })
+        }).catch(() => {
+            _this.fetchData(currHouseData.id)
+            _this.setData({showPopup:false,showOverlay:false})
+        });
+        
+    },
+
+    // 配置切换
+    onConfigClick: function(e) {
+        const { id,type } = e.currentTarget.dataset;
+        const _data = {}
+        switch (type) {
+            case 'house':
+                _data.houseIdRadio = id;
+                break;
+            case 'room':
+                _data.roomIdRadio = id;
+                break;
+        }
+        this.setData(_data)
+    },
+
+    // 房子配置
+    showHouseConfig :function(){
+        const {currHouseData,houseList} = this.data;
+        const managementComConfig = {
+            radioId:currHouseData.id,
+            contentList:houseList,
+            type:'house'
+        };
+        this.setData({
+            managementComConfig
+        })
+    },
+
+    // 房间配置
+    showRoomConfig :function(){
+        const { houseIdRadio } = this.data;
+        queryRoomsByHouseId(houseIdRadio,(e)=>{
+            console.log('eeeee',e)
+            const { roomList } = e
+            const managementComConfig = {
+                radioId:roomList.length > 0 ? roomList[0].id : 9999,
+                contentList:roomList,
+                type:'room'
+            };
+            this.setData({
+                managementComConfig,
+                roomIdRadio:roomList.length > 0 ? roomList[0].id : 9999
+            })
+        },()=>{
+            console.error('获取房间失败')
+        })
+        
+    },
+
+    // 删除House/Room
+    deleteHouseOrRoom:function(){
+        Dialog.confirm({
+            title: '确认删除',
+        }).then(() => {
+            this.settiingHouseOrRoom('delete')
+        }).catch(() => {
+        });
+    },
+
+    // 操作House/Room
+    settiingHouseOrRoom(type){
+        const _this = this;
+        const { houseIdRadio,roomIdRadio,settingComConfig } = this.data;
+        console.log(type,houseIdRadio,roomIdRadio,settingComConfig)
+        // house
+        if(roomIdRadio && roomIdRadio<0){
+            switch (type) {
+                case 'add':
+                    addHouse(settingComConfig,(e)=>{
+                        _success()
+                    })
+                    console.log('-- 添加房子 --',settingComConfig)
+                    break;
+                case 'update':
+                    updateHouse(settingComConfig,(e)=>{
+                        _success()
+                    })
+                    console.log('-- 修改房子 --',settingComConfig)
+                    break;
+                case 'delete':
+                    removeHouse(houseIdRadio,(e)=>{
+                        _success()
+                    })
+                    console.log('-- 删除房子 --',houseIdRadio)
+                    break;
+            }
+        }
+        // room
+        else if(houseIdRadio && houseIdRadio>0 && roomIdRadio && roomIdRadio>0){
+            switch (type) {
+                case 'add':
+                    addRoom(settingComConfig,(e)=>{
+                        _success()
+                    })
+                    console.log('-- 添加房间 --',settingComConfig)
+                    break;
+                case 'update':
+                    updateRoom(settingComConfig,(e)=>{
+                        _success()
+                    })
+                    console.log('-- 修改房间 --',settingComConfig)
+                    break;
+                case 'delete':
+                    removeRoom(roomIdRadio,(e)=>{
+                        _success()
+                    })
+                    console.log('-- 删除房间 --',roomIdRadio)
+                    break;
+            }
+        }
+
+        function _success(){
+            Toast.success(`操作成功`);
+            _this.setData({
+                showOverlay:false,
+                showPopup:false,
+                showConfirmBtn:false
+            })
+            _this.fetchData()
+        }
+    },
+
+    // 配置信息变化
+    onSettingChange:function(e){
+        const type = e.currentTarget.dataset.type;
+        const {settingComConfig} = this.data;
+        const updateObj = {};
+        updateObj[type] = e.detail;
+        this.setData({
+            settingComConfig:Object.assign(settingComConfig,updateObj),
+            showConfirmBtn:true
+        })
+    },
+
+    // 提交表单
+    onConfirm:function(){
+        const {overlayContent} = this.data;
+        this.settiingHouseOrRoom(overlayContent)
     },
 
     // 打开popup
     onPopupOpen:function(e){
+        // popup类型
         const { popupcontent } = e.currentTarget.dataset
         const popupContent = popupcontent ? popupcontent : null
-        console.log('popupContent:',popupContent)
+        console.log('popupContent:',popupContent);
+
+        switch (popupContent) {
+            case 'houseSetting':
+                this.showHouseConfig();
+                break;
+            case 'roomSetting':
+                this.showRoomConfig();
+                break;
+        }
+
         this.setData({
             showPopup:true,
             popupContent
@@ -198,18 +382,70 @@ Page({
     onPopupClose: function(){
         this.setData({
             showPopup:false,
-            popupContent:null
+            popupContent:null,
+            managementComConfig:null,
+            showConfirmBtn:false
         })
     },
 
     // 打开overlay
     onOverlayOpen:function(e){
         const { overlaycontent } = e.currentTarget.dataset
+        const { houseIdRadio,roomIdRadio } = this.data
         const overlayContent = overlaycontent ? overlaycontent : null
-        console.log('popupContent:',overlayContent)
+        console.log('overlayContent:',overlayContent)
+
+        let settingComConfig = {};        
+        switch (overlayContent) {
+            case 'update':
+                // room
+                if(roomIdRadio && roomIdRadio>0){
+                    getRoomByRoomId(roomIdRadio,(e)=>{
+                        settingComConfig = Object.assign(settingComConfig,e)
+                        this.updateSettingConfig(overlayContent,settingComConfig)
+                    },(err)=>{
+                        console.log('获取房间信息失败',err)
+                    })
+                }
+                // house
+                else{
+                    getHouseByHouseId(houseIdRadio,(e)=>{
+                        settingComConfig = Object.assign(settingComConfig,e)
+                        this.updateSettingConfig(overlayContent,settingComConfig)
+                    },(err)=>{
+                        console.log('获取房子信息失败',err)
+                    })
+                    
+                }
+                break;
+            case 'add':
+                // room
+                if(roomIdRadio && roomIdRadio>0){
+                    settingComConfig = {
+                        floor:'',
+                        houseId:houseIdRadio,
+                        name:''
+                    }
+                }
+                // house
+                else{
+                    settingComConfig = {
+                        address:'',
+                        name:''
+                    }
+                }
+                this.updateSettingConfig(overlayContent,settingComConfig)
+                break;
+        }
+    },
+
+    updateSettingConfig:function(overlayContent,settingComConfig){
         this.setData({
             showOverlay:true,
-            overlayContent
+            overlayContent,
+            settingComConfig
+        },()=>{
+            // this.settiingHouseOrRoom(overlayContent);
         })
     },
 
@@ -217,7 +453,9 @@ Page({
     onOverlayClose: function(){
         this.setData({
             showOverlay:false,
-            overlayContent:null
+            overlayContent:null,
+            settingComConfig:null,
+            showConfirmBtn:false
         })
     },
 });

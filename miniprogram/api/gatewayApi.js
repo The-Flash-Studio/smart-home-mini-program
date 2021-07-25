@@ -6,8 +6,8 @@ import commonRequestFunction from "./index"
  * @param {*} successCallback 
  * @param {*} failCallback 
  */
-export function addDevice(successCallback, failCallback) {
-  commonRequestFunction('smart-iot/gateway/addDevice', {}, successCallback, failCallback)
+export function addDevice(params,successCallback, failCallback) {
+  commonRequestFunction('smart-iot/gateway/addDevice',params, successCallback, failCallback)
 }
 /**
  * 进入准备配对状态，socket接收消息

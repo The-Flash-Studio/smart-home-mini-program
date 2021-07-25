@@ -1,0 +1,18 @@
+<view class="add_device_con">
+    <view class="spinner_container" wx:if="{{isPrepareDevice}}">
+        <view class="spinner_son_container">
+            <text class="spinner_tips">准备连接中...</text>
+            <van-loading type="spinner" color="#4caf50" size="48" />
+        </view>
+    </view>
+    <view wx:else>
+        <view class="grant_con_wrap">
+            <view class="grant_con">
+                <image class="avatar_img" src="https://s1.aigei.com/src/img/png/94/94ea7249361348c38135b3c93c8175f0.png?imageMogr2/auto-orient/thumbnail/!500x500r/gravity/Center/crop/500x500/quality/85/imageView2/2/w/500/|watermark/3/text/54ix57uZ572R57Sg5p2Q57yW5Y-3IzQyODgyODc4/font/5b6u6L2v6ZuF6buR/fontsize/272/fill/cmVk/dissolve/92/gravity/SouthEast/dx/27/dy/27/text/5YiG5a2Q5p2f5aSW5bu2KE1CRSk=/font/5b6u6L2v6ZuF6buR/fontsize/272/fill/cmVk/dissolve/92/gravity/NorthWest/dx/27/dy/27/text/NTEyw5c1MTI=/font/5b6u6L2v6ZuF6buR/fontsize/272/fill/cmVk/dissolve/92/gravity/SouthWest/dx/27/dy/27/text/5omL5py6/font/5b6u6L2v6ZuF6buR/fontsize/272/fill/cmVk/dissolve/92/gravity/NorthEast/dx/27/dy/27//text/54ix57uZ572RIGFpZ2VpLmNvbQ==/font/5b6u6L2v6ZuF6buR/fontsize/300/fill/TWFyb29u/dissolve/42/gravity/NorthWest/dx/62/dy/270&e=1735488000&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:ZuFrt_dop8gORjR2dFJKUnXrDIg="></image>
+                <view class="hello_tip">请输入设备昵称</view>
+                <input class="weui-input"  maxlength="10" bindinput="bindKeyInput" />
+                <button class="grant_btn"  bindtap="addDeviceFun">确定</button>
+            </view>
+        </view>
+    </view>
+</view>

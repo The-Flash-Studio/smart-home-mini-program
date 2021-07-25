@@ -1,0 +1,51 @@
+<template name="setting">
+  <view class="setting_container">
+    <!-- Title -->
+    <view class="management_title_box flex_row_start_center">
+      <van-icon wx:if="{{overlayContent === 'update'}}" name="records" size="25" color="#FF8691"/>
+      <text wx:if="{{overlayContent === 'update'}}" class="management_title_text">{{roomIdRadio>0 ? '更新房间信息' : '更新房子信息'}}</text>
+      <van-icon wx:if="{{overlayContent === 'add'}}" name="edit" size="25" color="#FF8691"/>
+      <text wx:if="{{overlayContent === 'add'}}" class="management_title_text">{{roomIdRadio>0 ? '添加房间' : '添加房子'}}</text>
+    </view>
+    <!-- Info -->
+    <van-cell-group>
+    <view wx:if="{{settingComConfig.name || settingComConfig.name===''}}">
+      <van-field
+        value="{{settingComConfig.name}}"
+        required
+        clearable
+        label="名称"
+        placeholder="请输入名称"
+        bind:change="onSettingChange"
+        data-type="name"
+      />
+    </view>
+    <view wx:if="{{settingComConfig.address || settingComConfig.address===''}}">
+      <van-field
+        value="{{settingComConfig.address}}"
+        required
+        clearable
+        label="地址"
+        placeholder="请输入房子地址"
+        bind:change="onSettingChange"
+        data-type="address"
+      />
+    </view>
+    <view wx:if="{{settingComConfig.floor || settingComConfig.floor===''}}">
+      <van-field
+        value="{{settingComConfig.floor}}"
+        required
+        clearable
+        label="楼层"
+        placeholder="请输入房间楼层"
+        bind:change="onSettingChange"
+        data-type="floor"
+      />
+    </view>
+  </van-cell-group> 
+    <!-- Button -->
+    <view class="management_button_box flex_row_end" bindtap="onConfirm" wx:if="{{showConfirmBtn}}">
+      <view class="management_button" style="background-color:#0FC160">{{overlayContent === 'add' ? '添加' : '修改'}}</view>
+    </view>
+  </view>
+</template>

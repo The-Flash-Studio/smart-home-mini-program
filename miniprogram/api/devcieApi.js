@@ -1,4 +1,5 @@
 "use strict";
+
 import commonRequestFunction from './index'
 /**
  * Device相关暂时无用，均使用gatewayApi、houseApi中接口
@@ -30,6 +31,11 @@ export function getDeviceById(requestObj = {}, successCallback, failCallback) {
   console.log("getDeviceById-> " + requestObj)
   commonRequestFunction('smart-iot/device/findById', requestObj, successCallback, failCallback)
 }
+export function findDevicesByRoomId(roomId, successCallback, failCallback) {
+  console.log("findDevicesByRoomId-> " + roomId)
+  commonRequestFunction('smart-iot/device/findDevicesByRoomId', {id:roomId}, successCallback, failCallback)
+}
+
 
 /**
  * 测试用
