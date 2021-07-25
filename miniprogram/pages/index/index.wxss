@@ -39,7 +39,7 @@
 .management_add {
   margin-left: 20rpx;
   border-radius: 30rpx;
-  border: #999 solid 1rpx;
+  border: #999 solid 2rpx;
   padding: 0rpx 15rpx 0 10rpx;
   height: 40rpx;
 }
@@ -48,36 +48,8 @@
   font-size: 25rpx;
   height: 40rpx;
   line-height: 40rpx;
-}
-
-/* management */
-.management_container{
-  padding:50rpx 30rpx;
-}
-.management_title_box{
-  padding:20rpx 0rpx 50rpx 0rpx;
-}
-.management_title_text{
-  font-size: 48rpx;
-  color:#5785e7;
-  margin-left: 10rpx;
   font-weight: 700;
-}
-.management_button_box {
-  height: 100rpx;
-  width: 690rpx;
-  padding: 20rpx 0rpx;
-  box-sizing: border-box;
-  margin-top: 30rpx;
-}
-.management_button {
-  height: 60rpx;
-  line-height: 60rpx;
-  font-size: 32rpx;
-  color: #fff;
-  border-radius: 10rpx;
-  padding:0 20rpx;
-  margin-left: 20rpx;
+  margin-left: 5rpx;
 }
 
 /* extra_line */
@@ -150,4 +122,55 @@
 .card_subtitle {
   font-size: 20rpx;
   color: rgb(122, 121, 121);
+}
+.addDevice_box {
+  width: 730rpx;
+  height: 60rpx;
+  margin: 30rpx 10rpx 0rpx 10rpx;
+}
+.addDevice_btn {
+  width: 690rpx;
+  /* padding: 0 15rpx; */
+  border-radius: 15rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  background-color: #ffa0a8;
+  color: #fff;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+/* management */
+.management_container{
+  padding:50rpx 30rpx;
+}
+.management_title_box{
+  padding:20rpx 0rpx 50rpx 0rpx;
+}
+.management_title_text{
+  font-size: 48rpx;
+  color:#5785e7;
+  margin-left: 10rpx;
+  font-weight: 700;
+}
+.management_button_box {
+  height: 100rpx;
+  width: 690rpx;
+  padding: 20rpx 0rpx;
+  box-sizing: border-box;
+  margin-top: 30rpx;
+}
+.management_button {
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 32rpx;
+  color: #fff;
+  border-radius: 10rpx;
+  padding:0 20rpx;
+  margin-left: 20rpx;
+}
+
+/* overlay */
+.setting_container{
+  padding:50rpx 30rpx;
 }

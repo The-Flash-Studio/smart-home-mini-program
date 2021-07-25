@@ -34,6 +34,11 @@ export function getDeviceById(requestObj = {}, successCallback, failCallback) {
   commonRequestFunction('smart-iot/device/findById', requestObj, successCallback, failCallback)
 }
 
+export function findDevicesByRoomId(id=0,successCallback,failCallback){
+  console.log("findDevicesByRoomId-> " + id)
+  commonRequestFunction('smart-iot/device/findDevicesByRoomId', {id}, successCallback, failCallback)
+}
+
 /**
  * 测试用
  */

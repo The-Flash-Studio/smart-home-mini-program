@@ -92,7 +92,7 @@ export default function commonRequestFunction(requestUrl, params, successCallbac
     const token = wx.getStorageSync(TOKEN_NAME);
     wx.request({
       url: baseUrl + requestUrl,
-      header: { token: token },
+      header: { token: token,debug:true },
       data: { params: params },
       method: 'post',
       success(data) {
