@@ -31,6 +31,7 @@ export function getDeviceById(requestObj = {}, successCallback, failCallback) {
   commonRequestFunction('smart-iot/device/findById', requestObj, successCallback, failCallback)
 }
 
+
 /**
  * 测试用
  */

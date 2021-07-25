@@ -23,6 +23,12 @@
           "pathName": "pages/scene/scene",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/addDevice/addDevice",
+          "pathName": "pages/addDevice/addDevice",
+          "query": "",
+          "scene": null
         }
       ]
     }

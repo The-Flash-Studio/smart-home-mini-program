@@ -4,7 +4,8 @@
     "pages/logs/logs",
     "pages/scene/scene",
     "pages/mine/mine",
-    "pages/device/device"
+    "pages/device/device",
+    "pages/addDevice/addDevice"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -37,6 +38,7 @@
   },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
+    "van-loading": "@vant/weapp/loading/index",
     "van-button": "@vant/weapp/button/index",
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",
