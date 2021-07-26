@@ -34,7 +34,7 @@ Page({
     // 存在Token
     if (app.token) {
       console.log('token from App:', app.token)
-      this.loginSuccessAction()
+      _this.loginSuccessAction()
     }
     // 不存在Token
     else {
@@ -42,7 +42,7 @@ Page({
         if (islogin == true && token) {
           app.token = token
           console.log('token from isLoginCheck:', token)
-          this.loginSuccessAction()
+          _this.loginSuccessAction()
         }
       })
     }

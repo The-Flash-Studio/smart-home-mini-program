@@ -1,31 +1,14 @@
 <view class="flex_column_box page-padding">
 
-  <van-nav-bar
-    title="{{deviceInfo.nickName}}"
-    left-text="返回"
-    right-text=""
-    left-arrow
-    bind:click-left="onClickLeft"
-    bind:click-right="onClickRight"
-    custom-style="page-nav-bar"
-    title-class="page-title"
-  >
-    <van-icon
-      name="delete-o"
-      size="20"
-      slot="right"
-    />
+  <van-nav-bar title="{{deviceInfo.nickName}}" left-text="返回" right-text="" left-arrow bind:click-left="onClickLeft"
+    bind:click-right="onClickRight" custom-style="page-nav-bar" title-class="page-title">
+    <van-icon name="delete-o" size="20" slot="right" />
   </van-nav-bar>
 
-  <!-- <van-steps
-    steps="{{steps}}"
-    active="{{stepsActive}}"
-    active-color="#38f"
-  /> -->
   <!-- 基础信息 状态 -->
   <text style="font-size:30rpx; color: #999; margin-left: 10px;">状态</text>
   <van-cell title=" 描述">
-        {{deviceInfo.description}}
+    {{deviceInfo.description?deviceInfo.description:""}}
   </van-cell>
   <!-- deviceInfo.powerSource  -->
   <van-cell title=" 电源">
@@ -36,24 +19,14 @@
       size="18px"
     /> -->
     <block wx:if="{{deviceInfo.powerSource=='true'}}">
-      <van-tag
-        round
-        plain
-        type="success"
-        size="medium"
-      >
+      <van-tag round plain type="success" size="medium">
         <van-icon name="success" color="green" />
         正常
       </van-tag>
 
     </block>
     <block wx:else>
-      <van-tag
-        round
-        plain
-        type="warning"
-        size="medium"
-      >
+      <van-tag round plain type="warning" size="medium">
         <van-icon name="fail" color="red" />
         断开
       </van-tag>
@@ -61,8 +34,16 @@
     </block>
   </van-cell>
   <van-cell title=" 更新时间（upTime）">
-        {{deviceInfo.upTime}}
+    {{deviceInfo.upTime?deviceInfo.upTime:"无"}}
   </van-cell>
+  <block wx:if="{{deviceAttribute}}" wx:for="{{deviceAttribute.statusCluster}}" wx:for-item="cluster"
+    wx:for-index="index" wx:key="index">
+    <block wx:if="{{cluster.clusterAttributes}}" wx:for="{{cluster.clusterAttributes}}" wx:for-item="attribute"
+      wx:for-index="index" wx:key="index">
+      <statusItem id="statusItem" onItemClick="onDevcieItemClick" clusterAttribute="{{attribute}}"
+        deviceId="{{cluster.deviceId}}" inOrOut="{{cluster.inOrOut}}" endpoint="{{cluster.endpoint}}" />
+    </block>
+  </block>
   <!-- <van-checkbox
     value="{{ currentCheckValue }}"
     icon-size="20px"
@@ -118,4 +99,3 @@
 </view>
 <van-dialog id="van-dialog" />
 <van-toast id="van-toast" />
-

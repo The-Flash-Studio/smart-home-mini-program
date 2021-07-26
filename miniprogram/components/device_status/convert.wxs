@@ -1,0 +1,23 @@
+var convert = {
+  parseValueRangeToShow: function (valueType, valueRangeString) {
+    var minVal = ""
+    var maxVal = ""
+    var valueArray = JSON.parse(valueRangeString)
+    for (var i = 0; i < valueArray.length; ++i) {
+      var value = valueArray[i]
+      var key = value.key;
+      var val = value.val;
+      if (key == "min" || key == "0") {
+        minVal = val;
+      } else if (key == "max" || key == "1") {
+        maxVal = val;
+      }
+    }
+    var linkChar = valueType == "list" ? "/" : "~";
+    return minVal + linkChar + maxVal
+  },
+}
+
+module.exports = {
+  parseValueRangeToShow: convert.parseValueRangeToShow
+}

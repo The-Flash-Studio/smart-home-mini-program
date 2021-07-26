@@ -1,12 +1,12 @@
+import {
+  getDeviceInfo,
+  getDeviceStatus,
+  getDeviceSupportAttribute
+} from '../../api/devcieApi';
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 Page({
   data: {
-    props:{},
-    houseId: 0,
-    houseName: "梅川路",
-    roomId: 0,
-    roomName: "客厅",
-    operateType: 0,//0 详情，1 添加  
+    props: {},
     currentCheckValue: false,
     currentValue: 48,
     currentValueShow: 48,
@@ -15,33 +15,131 @@ Page({
       '100%': '#ee0a24',
 
     },
-    steps: [
-    ],
-    stepsActive: 2,
-    deviceInfo: {
-      id: '122',
-      gatewayId: '30',
-      roomId: '',
-      deviceId: "0x0402",
-      description: "IAS Zone",
-      profileId: "0x0104",
-      modelId: null,
-      manufacturer: null,
-      shortAddress: "0x7E14",
-      ieee: "0x000D6FFFFED209BF",
-      nickName: "水浸传感器",
-      endpoint: "0x01",
-      powerSource: "true",
-      security: "false",
-      receiveWhenIdle: "false",
-      status: 0,
-      upTime: null,
-      createTime: null,
+    deviceInfo: {},
+    deviceStatus: {},
+    deviceAttribute: {},
+    isRequesting: false,
+    requestTask: '',
+  },
+
+  onLoad: function (options) {
+    if (!options.props) {
+      return
+    }
+    this.setData({
+      props: JSON.parse(options.props)
+    })
+    let props = this.data.props;
+    this.initDeviceInfo(props.roomId, props.gatewayId, props.roomId, props.deviceId)
+  },
+
+  onReady:function(options){
+    this.statusItem = this.selectComponent("#statusItem")
+  },
+
+  initDeviceInfo(houseId, gatewayId, roomId, deviceId) {
+    getDeviceInfo(deviceId, (data) => {
+        this.setData({
+          deviceInfo: data
+        })
+      },
+      (error) => {
+
+      });
+    // getDeviceStatus(deviceId, (data) => {
+    //     this.setData({
+    //       deviceStatus: data
+    //     })
+    //   },
+    //   (error) => {
+    //     console.log("getDeviceStatus error" + error);
+    //   });
+    getDeviceSupportAttribute(122, (data) => {
+        console.log("getDeviceSupportAttribute " + data.deviceId)
+        if (data.statusCluster && data.statusCluster.length > 0) {
+          this.setData({
+            deviceAttribute: data
+          })
+        } else {
+          this.setData({
+            deviceAttribute: this.mockAttribute()
+          })
+        }
+
+      },
+      (error) => {
+
+      });
+  },
+
+  onDevcieItemClick:function(event){
+    console.log("onDevcieItemClick ")
+  },
+  onCheckChange: function (event) {
+    this.setData({
+      currentCheckValue: event.detail
+    })
+    console.log('onCheckChange', event.detail)
+  },
+  onSliderChange: function (event) {
+    this.setData({
+      currentValue: event.detail
+    })
+  },
+
+  onSliderDrag: function (event) {
+    this.setData({
+      currentValueShow: event.detail.value
+    })
+  },
+
+  onConfirmSet: function (event) {
+    this.setData({
+      isRequesting: true
+    })
+    let _this = this
+    _this.data.requestTask = setTimeout(function () {
+      _this.setData({
+        isRequesting: false
+      })
+    }, 3000)
+  },
+
+  onClickLeft: function (event) {
+    wx.navigateBack({
+      delta: 1,
+    })
+  },
+
+  onClickRight: function (event) {
+    Dialog.confirm({
+        message: '是否确认删除此设备',
+      })
+      .then(() => { //confirm
+        console.log('do delete device')
+      })
+      .catch(() => {
+
+      })
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    clearTimeout(this.data.requestTask)
+  },
+
+
+  mockStatus() {
+    return {}
+  },
+  mockAttribute() {
+    let attribute = {
       clusterAttributes: {
         deviceId: 78,
         ieee: "0x000D6FFFFED209BF",
-        statusCluster: [
-          {
+        statusCluster: [{
             "cluster": "0x0500",
             "statusOrCommand": "status",
             "attribute": null,
@@ -109,7 +207,7 @@ Page({
             "valueType": "text",
             "valueUnit": null,
             "valueRange": " [{key:\"min\",val:\"0\"},{key:\"max\",val:\"300\"}]",
-            controlType: null
+            "controlType": null
           },
           {
             "cluster": "0x0500",
@@ -133,108 +231,8 @@ Page({
           }
         ],
       }
-    },
-    isRequesting: false,
-    requestTask: '',
-  },
-
-  onLoad: function (options) {
-    if(options.props){
-      this.setData({
-        props:JSON.parse(options.props) 
-      })
-      console.log("1 "+this.data.props.houseId)
-      console.log("2 "+this.data.props.gatewayId)
-      console.log("3 "+this.data.props.roomId)
-      console.log("4 "+this.data.props.deviceId)
     }
-    this.makeUpSteps();
+    return attribute
   },
-
-  makeUpSteps() {
-    let steps = this.data.operateType == 1 ? [
-      {
-        text: this.data.houseName,
-        activeIcon: 'arrow',
-        inactiveIcon: 'arrow',
-      }, {
-        text: this.data.roomName,
-        activeIcon: 'arrow',
-        inactiveIcon: 'arrow',
-      }, {
-        text: "添加设备",
-        activeIcon: 'add-o',
-        inactiveIcon: 'add-o',
-      }, {
-        text: "添加成功",
-        activeIcon: 'passed',
-        inactiveIcon: 'passed',
-      },
-    ] : [
-      {
-        text: this.data.houseName,
-        activeIcon: 'circle',
-        inactiveIcon: 'circle',
-      }, {
-        text: this.data.roomName,
-        activeIcon: 'circle',
-        inactiveIcon: 'circle',
-      }, {
-        text: this.data.deviceInfo.nickName ? this.data.deviceInfo.nickName : "设备详情",
-        activeIcon: 'setting-o',
-        inactiveIcon: 'setting-o',
-      },]
-    this.setData({
-      steps: steps,
-    })
-  },
-
-  onCheckChange: function (event) {
-    this.setData({ currentCheckValue: event.detail })
-    console.log('onCheckChange', event.detail)
-  },
-  onSliderChange: function (event) {
-    this.setData({ currentValue: event.detail })
-  },
-
-  onSliderDrag: function (event) {
-    this.setData({ currentValueShow: event.detail.value })
-  },
-
-  onConfirmSet: function (event) {
-    this.setData({ isRequesting: true })
-    let _this = this
-    _this.data.requestTask = setTimeout(function () {
-      _this.setData({
-        isRequesting: false
-      })
-    }, 3000)
-  },
-
-  onClickLeft: function (event) {
-    wx.navigateBack({
-      delta: 1,
-    })
-  },
-
-  onClickRight: function (event) {
-    Dialog.confirm({
-      message: '是否确认删除此设备',
-    })
-      .then(() => {//confirm
-        console.log('do delete device')
-      })
-      .catch(() => {
-
-      })
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-    clearTimeout(this.data.requestTask)
-  },
-
 
 })
