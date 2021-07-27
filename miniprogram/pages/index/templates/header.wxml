@@ -8,6 +8,7 @@
       </view>
       <view class="icon_box flex_row_center" bindtap="onPopupOpen" data-popupContent="houseSetting">
         <van-icon name="setting-o" size="18"/>
+        <text class="title_text text_overflow_one" style="margin-left:8rpx;margin-right:10rpx">配置</text>
       </view>
     </view>
   </view>

@@ -174,3 +174,17 @@
 .setting_container{
   padding:50rpx 30rpx;
 }
+
+/* loading */
+.loading_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999 !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #FFF;
+}

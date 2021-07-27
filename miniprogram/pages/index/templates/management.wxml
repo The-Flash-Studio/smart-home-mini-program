@@ -3,7 +3,7 @@
       <!-- Title -->
       <view class="management_title_box flex_row_start_center">
         <van-icon name="home-o" size="25" color="#FF8691"/>
-        <text class="management_title_text">{{type === 'house' ? '我的房子' : '我的房间'}}</text>
+        <text class="management_title_text">{{type === 'house' ? '我的房子' : '房间'}}</text>
         <view class="flex_row_start_center management_add" bindtap="onOverlayOpen" data-overlaycontent="add">
           <van-icon name="plus" size="12" color="#999"/>
           <text class="management_add_text">{{type === 'house' ? '添加房子' : '添加房间'}}</text>

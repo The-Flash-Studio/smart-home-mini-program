@@ -43,15 +43,17 @@
     bind:close="onPopupClose"
     position="bottom"
     round="true"
+    closeable="{{popupContent  !== 'changeHouse'}}"
     >
     <template wx:if="{{popupContent  === 'changeHouse'}}" is="changeHouse" data="{{houseNameList,houseIndexRadio}}"/>
-    <template wx:if="{{popupContent  === 'houseSetting' || popupContent === 'roomSetting'}}" is="management" data="{{...managementComConfig}}"/>
+    <template wx:if="{{popupContent  === 'houseSetting' || popupContent === 'roomSetting'}}" is="management" data="{{...managementComConfig,houseName:currHouseData.name}}"/>
   </van-popup>
   <van-popup 
     show="{{ showOverlay }}"
     bind:close="onOverlayClose"
     position="bottom"
     round="true"
+    closeable="true"
     >
     <template wx:if="{{overlayContent  === 'update' || overlayContent === 'add'}}" is="setting" data="{{overlayContent,houseIdRadio,roomIdRadio,settingComConfig,showConfirmBtn}}"/>
   </van-popup>
@@ -61,6 +63,10 @@
   
   <!-- dialog -->
   <van-dialog id="van-dialog" />
+  <!-- loading -->
+  <view class="loading_container" wx:if="{{showLoading}}">
+    <van-loading color="#1989fa" />
+  </view>
 </view>
 
 

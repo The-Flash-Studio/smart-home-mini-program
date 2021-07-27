@@ -44,8 +44,8 @@
     </view>
   </van-cell-group> 
     <!-- Button -->
-    <view class="management_button_box flex_row_end" bindtap="onConfirm" wx:if="{{showConfirmBtn}}">
-      <view class="management_button" style="background-color:#0FC160">{{overlayContent === 'add' ? '添加' : '修改'}}</view>
+    <view class="management_button_box flex_row_end">
+      <view class="management_button" style="background-color:#0FC160"  bindtap="onConfirm" wx:if="{{showConfirmBtn}}">{{overlayContent === 'add' ? '添加' : '修改'}}</view>
     </view>
   </view>
 </template>

@@ -9,6 +9,7 @@ import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 Page({
     data: {
+        showLoading:true,
         userId:null,
         houseList:[],
         houseNameList:[],
@@ -42,7 +43,8 @@ Page({
             currRoomData:null,
             roomList:[],
             devicesList:[],
-            userId:null
+            userId:null,
+            showLoading:true
         })
 
         // 当前房子集合
@@ -85,7 +87,8 @@ Page({
                         devicesList,
                         userId,
                         houseIdRadio:currHouseData.id,
-                        houseIndexRadio
+                        houseIndexRadio,
+                        showLoading:false
                     },()=>{
                         _this.selectComponent('#tabs').resize();
                     })
@@ -217,7 +220,8 @@ Page({
 
     // 配置切换
     onConfigClick: function(e) {
-        const { id,type } = e.currentTarget.dataset;
+        const { id } = e.currentTarget.dataset;
+        const { type } = this.data.managementComConfig ? this.data.managementComConfig : {}
         const _data = {}
         switch (type) {
             case 'house':
@@ -245,9 +249,8 @@ Page({
 
     // 房间配置
     showRoomConfig :function(){
-        const { houseIdRadio } = this.data;
+        const { houseIdRadio,currHouseData } = this.data;
         queryRoomsByHouseId(houseIdRadio,(e)=>{
-            console.log('eeeee',e)
             const { roomList } = e
             const managementComConfig = {
                 radioId:roomList.length > 0 ? roomList[0].id : 9999,
@@ -267,7 +270,7 @@ Page({
     // 删除House/Room
     deleteHouseOrRoom:function(){
         Dialog.confirm({
-            title: '确认删除',
+            title: '删除？',
         }).then(() => {
             this.settiingHouseOrRoom('delete')
         }).catch(() => {
@@ -439,6 +442,7 @@ Page({
     },
 
     updateSettingConfig:function(overlayContent,settingComConfig){
+        console.log(settingComConfig)
         this.setData({
             showOverlay:true,
             overlayContent,
