@@ -66,35 +66,44 @@ Page({
                 return e.name
             })
             console.log('--- 当前房子 ---',currHouseData)
+            this.setData({
+                houseList,
+                houseNameList,
+                currHouseData,
+                userId,
+                houseIdRadio:currHouseData.id,
+                houseIndexRadio
+            },()=>{
+                _this.selectComponent('#tabs').resize();
+            })
 
             // 获取当前房子的房间列表
+            !curr_house_id && this.setData({showLoading:false})
             queryRoomsByHouseId(curr_house_id,(e)=>{
                 const {roomList = []} = e;
                 const currRoomData = roomList.length>0 ? roomList[0] : {};
                 console.log('--- 当前房间 ---',currRoomData)
                 const {id:roomId} = currRoomData
 
+                _this.setData({
+                    currRoomData,
+                    roomList,
+                },()=>{
+                    _this.selectComponent('#tabs').resize();
+                })          
+
                 // 获取当前房间的设备列表
+                !roomId && this.setData({showLoading:false})
                 findDevicesByRoomId(roomId,(e)=>{
                     const devicesList = e;
                     console.log('--- 当前设备 ---',devicesList)
                     _this.setData({
-                        houseList,
-                        houseNameList,
-                        currHouseData,
-                        currRoomData,
-                        roomList,
                         devicesList,
-                        userId,
-                        houseIdRadio:currHouseData.id,
-                        houseIndexRadio,
                         showLoading:false
-                    },()=>{
-                        _this.selectComponent('#tabs').resize();
                     })
-                })
-            })
-        })
+                },(err)=>{this.setData({showLoading:false})})
+            },(err)=>{this.setData({showLoading:false})})
+        },(err)=>{this.setData({showLoading:false})})
     },
 
     // 切换房子
@@ -195,8 +204,7 @@ Page({
         const _this = this;
         const {currHouseData} = this.data;
         Dialog.confirm({
-            title: currHouseData.name,
-            message: `关联网关`,
+            title: `关联网关`,
         }).then(() => {
             wx.scanCode({
                 success (res) {

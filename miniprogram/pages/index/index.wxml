@@ -29,6 +29,9 @@
           <block wx:for="{{devicesList}}" wx:key="index">
             <template is="cardItem" data="{{...item}}"/>
           </block>
+          <view style="width:100vw">
+            <van-empty wx:if="{{!devicesList || devicesList.length === 0}}" image="search" description="没有设备" />
+          </view>
           <view class="addDevice_box flex_row_end" bindtap="addDevice">
             <view class="addDevice_btn">添加设备</view>
           </view>
