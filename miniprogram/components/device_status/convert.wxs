@@ -1,8 +1,19 @@
 var convert = {
-  parseValueRangeToShow: function (valueType, valueRangeString) {
+  parseValueRangeToShow: function (clusterAttribute) {
+    if (!clusterAttribute) {
+      return '';
+    }
+    var valueType = clusterAttribute.valueType;
+    if (valueType === "text") {
+      return ''
+    }
+    var valueArray = JSON.parse(clusterAttribute.valueRange)
+    if (!valueArray) {
+      return ''
+    }
+
     var minVal = ""
     var maxVal = ""
-    var valueArray = JSON.parse(valueRangeString)
     for (var i = 0; i < valueArray.length; ++i) {
       var value = valueArray[i]
       var key = value.key;
@@ -14,7 +25,11 @@ var convert = {
       }
     }
     var linkChar = valueType == "list" ? "/" : "~";
-    return minVal + linkChar + maxVal
+
+    var valueUnit = clusterAttribute.valueUnit;
+    if (!valueUnit || valueUnit == 'null') valueUnit = ''
+
+    return minVal + linkChar + maxVal + " " + valueUnit
   },
 }
 

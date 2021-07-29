@@ -1,3 +1,4 @@
+var app = getApp();
 import {
   getDeviceInfo,
   getDeviceStatus,
@@ -26,11 +27,18 @@ Page({
     if (!options.props) {
       return
     }
+    this.onSocketMessage();
     this.setData({
       props: JSON.parse(options.props)
     })
     let props = this.data.props;
     this.initDeviceInfo(props.roomId, props.gatewayId, props.roomId, props.deviceId)
+  },
+
+  onSocketMessage: function () {
+    app.socketInfo.callback = function (res) {
+      console.log("onSocketMessage Device :", res)
+    }
   },
 
   onReady:function(options){
@@ -62,7 +70,7 @@ Page({
           })
         } else {
           this.setData({
-            deviceAttribute: this.mockAttribute()
+            deviceAttribute: []
           })
         }
 
@@ -97,7 +105,7 @@ Page({
     this.setData({
       isRequesting: true
     })
-    let _this = this
+    var _this = this
     _this.data.requestTask = setTimeout(function () {
       _this.setData({
         isRequesting: false
@@ -128,111 +136,6 @@ Page({
    */
   onUnload: function () {
     clearTimeout(this.data.requestTask)
-  },
-
-
-  mockStatus() {
-    return {}
-  },
-  mockAttribute() {
-    let attribute = {
-      clusterAttributes: {
-        deviceId: 78,
-        ieee: "0x000D6FFFFED209BF",
-        statusCluster: [{
-            "cluster": "0x0500",
-            "statusOrCommand": "status",
-            "attribute": null,
-            "attributeName": "BatteryPercentage",
-            "valueType": "number",
-            "valueUnit": "%",
-            "valueRange": " [{key:\"min\",val:\"0\"},{key:\"max\",val:\"100\"}]",
-
-          },
-          {
-            "cluster": "0x0500",
-            "statusOrCommand": "status",
-            "attribute": null,
-            "attributeName": "BatteryVoltage",
-            "valueType": "number",
-            "valueUnit": "伏特",
-            "valueRange": " [{key:\"min\",val:\"0\"},{key:\"max\",val:\"200\"}]",
-            "controlType": null
-          },
-          {
-            "cluster": "0x0500",
-            "statusOrCommand": "status",
-            "attribute": null,
-            "attributeName": "Dimmer",
-            "valueType": "number",
-            "valueUnit": "度",
-            "valueRange": " [{key:\"min\",val:\"0\"},{key:\"max\",val:\"100\"}]",
-            "controlType": null
-          },
-          {
-            "cluster": "0x0500",
-            "statusOrCommand": "status",
-            "attribute": null,
-            "attributeName": "Illuminance",
-            "valueType": "number",
-            "valueUnit": "流明",
-            "valueRange": " [{key:\"min\",val:\"0\"},{key:\"max\",val:\"1000\"}]",
-            "controlType": null
-          },
-          {
-            "cluster": "0x0500",
-            "statusOrCommand": "status",
-            "attribute": null,
-            "attributeName": "LinkQuality",
-            "valueType": "number",
-            "valueUnit": "%",
-            "valueRange": " [{key:\"min\",val:\"0\"},{key:\"max\",val:\"300\"}]",
-            "controlType": null
-          },
-          {
-            "cluster": "0x0500",
-            "statusOrCommand": "status",
-            "attribute": null,
-            "attributeName": "Manufacturer",
-            "valueType": "text",
-            "valueUnit": "",
-            "valueRange": " [{key:\"min\",val:\"0\"},{key:\"max\",val:\"300\"}]",
-            "controlType": null
-          },
-          {
-            "cluster": "0x0500",
-            "statusOrCommand": "status",
-            "attribute": null,
-            "attributeName": "ModelId",
-            "valueType": "text",
-            "valueUnit": null,
-            "valueRange": " [{key:\"min\",val:\"0\"},{key:\"max\",val:\"300\"}]",
-            "controlType": null
-          },
-          {
-            "cluster": "0x0500",
-            "statusOrCommand": "status",
-            "attribute": null,
-            "attributeName": "Power",
-            "valueType": "list",
-            "valueUnit": "",
-            "valueRange": " [{key:\"0\",val:\"开\"},{key:\"1\",val:\"关\"}]",
-            "controlType": null
-          },
-          {
-            "cluster": "0x0500",
-            "statusOrCommand": "status",
-            "attribute": null,
-            "attributeName": "Water",
-            "valueType": "list",
-            "valueUnit": "",
-            "valueRange": " [{key:\"0\",val:\"干燥\"},{key:\"1\",val:\"湿润\"}]",
-            "controlType": null
-          }
-        ],
-      }
-    }
-    return attribute
   },
 
 })

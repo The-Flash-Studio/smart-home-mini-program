@@ -13,7 +13,7 @@ Page({
         userId:null,
         houseList:[],
         houseNameList:[],
-        currHouseData:null,
+        currHouseData:{},
         currRoomData:null,
         roomList:[],
         devicesList:[],

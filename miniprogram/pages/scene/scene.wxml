@@ -1,6 +1,8 @@
 <import src="./templates/header.wxml"></import>
-<view class="flex_column_box">
+<view class="flex_column_box page-padding">
+  <block wx:if="{{isDebug}}">
   <template is="index_header" data="{{...houseList}}" />
+  </block>
   
   <block wx:if="{{isDebug}}">
     <van-cell

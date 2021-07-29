@@ -71,7 +71,7 @@ export function getAllMockDevices() {
         },
         {
           name: "我出门了",
-          description: "关灯并打开扫地机，打开扫地机，关灯和窗帘，空调调至睡眠模式关",
+          description: "关灯并打开扫地机，打开扫地机。",
           sceneType: 2,
           sceneIcon:"wap-home-o",
           equipmentList: [{

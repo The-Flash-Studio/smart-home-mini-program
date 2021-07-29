@@ -1,6 +1,10 @@
 /* miniprogram/pages/scene/scene.wxss */
 @import "./templates/header.wxss";
 
+.page-padding {
+  padding: 50px 0rpx 0 0rpx;
+}
+
 .scene_type {
   font-size: 30px !important;
 }

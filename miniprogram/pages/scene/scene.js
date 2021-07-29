@@ -29,7 +29,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.onSocketMessage();
     const _this = this;
     // 存在Token
     if (app.token) {
@@ -45,12 +44,6 @@ Page({
           _this.loginSuccessAction()
         }
       })
-    }
-  },
-
-  onSocketMessage: function () {
-    app.socketInfo.callback = function (res) {
-      console.log("onSocketMessage Scene :", res)
     }
   },
 
