@@ -70,6 +70,18 @@
   <view class="loading_container" wx:if="{{showLoading}}">
     <van-loading color="#1989fa" />
   </view>
+
+  <view wx:if="{{gatewayList && gatewayList.length != 0}}">
+    <van-picker
+    show-toolbar
+    title="选择网关"
+    columns="{{ gatewayList }}"
+    value-key="name"
+    bind:cancel="onCancelSelectGateway"
+    bind:confirm="onConfirmSelectGateway"
+  />
+  </view>
+
 </view>
 
 

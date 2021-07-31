@@ -98,7 +98,6 @@ export default function commonRequestFunction(requestUrl, params, successCallbac
       success(data) {
         const responseCode = data?.data?.status?.code || CUSTOM_INTERNAL_ERROR_CODE;
         const responseData = data?.data?.data || {};
-        console.log('responseData: ', responseData);
         if (responseCode == 200) {
           successCallback && successCallback(responseData)
         } else {

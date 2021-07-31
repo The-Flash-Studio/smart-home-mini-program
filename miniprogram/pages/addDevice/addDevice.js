@@ -11,15 +11,15 @@ Page({
   },
   onLoad(options) {
     let {houseId,roomId,gatewayId} = options;
-    houseId = 24;
-    roomId = 22;
-    this.doPrepareDevice(houseId,roomId);
+    console.log('houseId,roomId,gatewayId: ', houseId,roomId,gatewayId);
+    this.doPrepareDevice(houseId,roomId,gatewayId);
     this.onSocketMessage();
   },
-  doPrepareDevice(houseId,roomId) {
+  doPrepareDevice(houseId,roomId,gatewayId) {
     prepareDevice({
       houseId: houseId,
-      roomId: roomId
+      roomId: roomId,
+      gatewayId:gatewayId
     }, (data) => {
       console.log('data:>>> ', data);
       this.setData({ isPrepareDevice:false })

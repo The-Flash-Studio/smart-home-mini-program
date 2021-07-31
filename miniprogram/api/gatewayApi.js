@@ -35,7 +35,7 @@ export function removeGateway(gatewayId, successCallback, failCallback) {
  * @param {*} failCallback 
  */
 export function queryGateWaryByHouseId(houseId, successCallback, failCallback) {
-  commonRequestFunction('smart-iot/gateway/queryGatewaysByHouseId', { houseId }, successCallback, failCallback)
+  commonRequestFunction('smart-iot/gateway/queryGatewaysByHouseId', { id:houseId }, successCallback, failCallback)
 }
 
 /**
