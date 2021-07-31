@@ -60,6 +60,6 @@
     "van-radio": "@vant/weapp/radio/index",
     "van-radio-group": "@vant/weapp/radio-group/index",
     "van-overlay": "@vant/weapp/overlay/index",
-    "van-empty": "@vant/weapp/empty/index"
+    "van-notice-bar": "@vant/weapp/notice-bar/index"
   }
 }

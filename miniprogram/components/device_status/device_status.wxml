@@ -2,10 +2,10 @@
 <wxs module="convert" src="convert.wxs"></wxs>
 <van-cell title="{{clusterAttribute.attributeName}}" label="{{convert.parseValueRangeToShow(clusterAttribute)}}"
 bind:click="onItemClick">
-<block wx:if="{{clusterAttribute.valueType=='number'||clusterAttribute.valueType=='list'}}">
-  <!-- <van-tag round plain type="success" size="medium">
-      
-    </van-tag> -->
+<block wx:if="{{clusterAttribute&&clusterAttribute.clusterValue}}">
+  <van-tag round plain type="success" size="medium">
+    {{clusterAttribute.clusterValue}}
+    </van-tag>
 </block>
   <!-- <block wx:if="{{clusterAttribute.attributeName}}">
     <van-tag round plain type="success" size="medium">

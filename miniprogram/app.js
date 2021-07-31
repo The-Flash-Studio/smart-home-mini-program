@@ -77,7 +77,8 @@ App({
         })
         wx.onSocketMessage((res) => {
             console.log("App onSocketMessage : ", res)
-            that.socketInfo.callback(res.data)
+
+            that.socketInfo.callback(res.data.replace('已收到',''))
         })
     },
 

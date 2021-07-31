@@ -32,10 +32,8 @@ export function getDeviceSupportAttribute(id, successCallback, failCallback) {
 }
 
 export function deleteDeviceById(deviceId = -1, successCallback, failCallback) {
-  console.log("deleteDeviceById-> " + requestObj)
-  commonRequestFunction('smart-iot/device/remove', {
-    deviceId
-  }, successCallback, failCallback)
+  console.log("deleteDeviceById-> " + deviceId)
+  commonRequestFunction('smart-iot/device/remove', deviceId, successCallback, failCallback)
 }
 
 export function updateDeviceInfo(requestObj = {}, successCallback, failCallback) {

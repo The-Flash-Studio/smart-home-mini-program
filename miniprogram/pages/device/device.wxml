@@ -5,13 +5,23 @@
     <van-icon name="delete-o" size="20" slot="right" />
   </van-nav-bar>
 
+  <block wx:if="{{showNotice}}">
+    <block wx:if="{{isOffLine}}">
+      <van-notice-bar left-icon="warning-o" text="设备已离线" />
+    </block>
+    <block wx:else>
+      <van-notice-bar left-icon="certificate" color="green" background="#ecf9ff" text="设备连接成功" />
+    </block>
+  </block>
+
+
   <!-- 基础信息 状态 -->
-  <text style="font-size:30rpx; color: #999; margin-left: 10px;">状态</text>
+
   <van-cell title=" 描述">
     {{deviceInfo.description?deviceInfo.description:""}}
   </van-cell>
   <!-- deviceInfo.powerSource  -->
-  <van-cell title=" 电源">
+  <van-cell title=" 电源" bind:click="onDevcieItemClick">
     <!-- <van-icon
       slot="icon"
       name="cluster-o"
@@ -36,6 +46,7 @@
   <van-cell title=" 更新时间（upTime）">
     {{deviceInfo.upTime?deviceInfo.upTime:"无"}}
   </van-cell>
+  <text style="font-size:30rpx; color: #999; margin-left: 10px;">状态</text>
   <block wx:if="{{deviceAttribute}}" wx:for="{{deviceAttribute.statusCluster}}" wx:for-item="cluster"
     wx:for-index="index" wx:key="index">
     <block wx:if="{{cluster.clusterAttributes}}" wx:for="{{cluster.clusterAttributes}}" wx:for-item="attribute"

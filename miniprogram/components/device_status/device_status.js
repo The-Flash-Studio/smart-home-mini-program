@@ -16,18 +16,7 @@ Component({
       type:"object",
       value:{}
     },
-    deviceId:{
-      type:"number",
-      value:"设备号"
-    },
-    inOrOut:{
-      type:"string",
-      value:"输入输出"
-    },
-    endpoint:{
-      type:"string",
-      value:""
-    }
+
   },
 
   /**

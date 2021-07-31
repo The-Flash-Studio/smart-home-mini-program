@@ -16,7 +16,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isDebug:false,
+    isDebug:true,
     houseList: [],
     sceneTypeList: [],
     inputHouseName: "AAA",
@@ -212,7 +212,7 @@ Page({
       return
     }
     queryGatewayById(app.gatewayList[0].id, (data) => {
-      console.log("queryGatewayById result ->" + data)
+      console.log("queryGatewayById result ->" , data)
     }, (error) => {
       console.log("error->" + error.status.code + " - " + error.status.message)
     })
@@ -256,12 +256,12 @@ Page({
       console.log("请先添加一个房间")
       return
     }
-    queryGateWaryByHouseId(app.houseList[0].id,
+    queryGateWaryByHouseId(24,
       (data) => {
         app.gatewayList = data.gatewayList
-        console.log("queryGateWaryByHouseId result ->" + data)
+        console.log("queryGateWaryByHouseId result ->" , data)
       }, (error) => {
-        console.log("error->" + error.status.code + " - " + error.status.message)
+        console.log("error->" + error.status.code + " - " , error.status.message)
       })
   },
 
