@@ -10,7 +10,6 @@ import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 Page({
     data: {
-        array: ['美国', '中国', '巴西', '日本'],
         gatewayList: [],
         selectedGateway: "",
         showLoading: true,
@@ -473,7 +472,7 @@ Page({
 
     // 选择网关
     onConfirmSelectGateway(e) {
-        const gatewayListIdx = e?.detail?.value || 0;
+        const gatewayListIdx = e?.detail?.index || 0;
         const selectedGateway = this.data.gatewayList[gatewayListIdx].id
         const { currHouseData = {}, currRoomData = {} } = this.data;
         const { id: houseId } = currHouseData;
@@ -483,7 +482,7 @@ Page({
         })
     },
     // 取消选择网关
-    // onCancelSelectGateway() {
-    //     Toast(`必须为当前房子选择一个网关`);
-    // }
+    onCancelSelectGateway() {
+        Toast(`必须为当前房子选择一个网关`);
+    }
 });

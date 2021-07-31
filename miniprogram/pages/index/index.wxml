@@ -4,7 +4,7 @@
 <import src="./templates/management.wxml"></import>
 <import src="./templates/setting.wxml"></import>
 
-<view class="tab_box common_bg_color">
+<view class="tab_box common_bg_color" style="position:relative">
   <!-- Header -->
   <template is="index_header" data="{{currHouseData}}"/>
   <view class="extra_line" />
@@ -71,20 +71,15 @@
     <van-loading color="#1989fa" />
   </view>
 
-  <view wx:if="{{gatewayList && gatewayList.length != 0}}">
-    <!-- <van-picker
+  <view class="pick_con" wx:if="{{gatewayList && gatewayList.length != 0}}">
+    <van-picker
     show-toolbar
     title="选择网关"
     columns="{{ gatewayList }}"
     value-key="name"
     bind:cancel="onCancelSelectGateway"
     bind:confirm="onConfirmSelectGateway"
-  /> -->
-  <picker bindchange="onConfirmSelectGateway" mode="selector" range-key="name" range="{{gatewayList}}">
-    <view class="picker">
-      点击选择你的网关
-    </view>
-  </picker>
+  />
   </view>
 
 </view>

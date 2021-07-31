@@ -188,3 +188,10 @@
   bottom: 0;
   background-color: #FFF;
 }
+
+.pick_con{
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  background-color: red;
+}
