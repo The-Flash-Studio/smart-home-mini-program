@@ -19,6 +19,12 @@ export function addDevice(params,successCallback, failCallback) {
 export function prepareDevice(params, successCallback, failCallback) {
   commonRequestFunction('smart-iot/gateway/openDevicePairing', params, successCallback, failCallback)
 }
+export function openDevicePairing(params, successCallback, failCallback) {
+  commonRequestFunction('smart-iot//gateway/openDevicePairing', params, successCallback, failCallback)
+}
+
+
+
 /**
  * 删除网关
  * @param {*} gatewayId 

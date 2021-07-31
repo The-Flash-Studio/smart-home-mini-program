@@ -72,14 +72,19 @@
   </view>
 
   <view wx:if="{{gatewayList && gatewayList.length != 0}}">
-    <van-picker
+    <!-- <van-picker
     show-toolbar
     title="选择网关"
     columns="{{ gatewayList }}"
     value-key="name"
     bind:cancel="onCancelSelectGateway"
     bind:confirm="onConfirmSelectGateway"
-  />
+  /> -->
+  <picker bindchange="onConfirmSelectGateway" mode="selector" range-key="name" range="{{gatewayList}}">
+    <view class="picker">
+      点击选择你的网关
+    </view>
+  </picker>
   </view>
 
 </view>
