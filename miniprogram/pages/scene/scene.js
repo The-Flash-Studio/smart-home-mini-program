@@ -16,7 +16,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isDebug:true,
+    isDebug:false,
     houseList: [],
     sceneTypeList: [],
     inputHouseName: "AAA",
