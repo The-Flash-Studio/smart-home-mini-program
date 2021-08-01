@@ -71,7 +71,7 @@
     <van-loading color="#1989fa" />
   </view>
 
-  <view class="pick_con" wx:if="{{gatewayList && gatewayList.length != 0}}">
+  <view class="pick_con" wx:if="{{gatewayList && gatewayList.length > 1}}">
     <van-picker
     show-toolbar
     title="选择网关"

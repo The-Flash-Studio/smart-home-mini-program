@@ -177,7 +177,12 @@ Page({
                 _this.scanToConnectGateway()
             } else {
                 // 选择网关
-                _this.setData({ gatewayList: gatewayList })
+                if(gatewayList.length == 1){
+                    const selectedGateway = gatewayList[0].id
+                    _this.jumpAddDevicePage(houseId,selectedGateway,roomId);
+                }else{
+                    _this.setData({ gatewayList: gatewayList })
+                }
             }
         })
     },
@@ -477,6 +482,9 @@ Page({
         const { currHouseData = {}, currRoomData = {} } = this.data;
         const { id: houseId } = currHouseData;
         const { id: roomId } = currRoomData;
+        this.jumpAddDevicePage(houseId,selectedGateway,roomId);
+    },
+    jumpAddDevicePage(houseId,selectedGateway,roomId) {
         wx.navigateTo({
             url: `/pages/addDevice/addDevice?houseId=${houseId}&gatewayId=${selectedGateway}&roomId=${roomId}`
         })
