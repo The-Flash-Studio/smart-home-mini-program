@@ -10,7 +10,6 @@ import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 Page({
     data: {
-        array: ['美国', '中国', '巴西', '日本'],
         gatewayList: [],
         selectedGateway: "",
         showLoading: true,
@@ -178,7 +177,12 @@ Page({
                 _this.scanToConnectGateway()
             } else {
                 // 选择网关
-                _this.setData({ gatewayList: gatewayList })
+                if(gatewayList.length == 1){
+                    const selectedGateway = gatewayList[0].id
+                    _this.jumpAddDevicePage(houseId,selectedGateway,roomId);
+                }else{
+                    _this.setData({ gatewayList: gatewayList })
+                }
             }
         })
     },
@@ -473,17 +477,20 @@ Page({
 
     // 选择网关
     onConfirmSelectGateway(e) {
-        const gatewayListIdx = e?.detail?.value || 0;
+        const gatewayListIdx = e?.detail?.index || 0;
         const selectedGateway = this.data.gatewayList[gatewayListIdx].id
         const { currHouseData = {}, currRoomData = {} } = this.data;
         const { id: houseId } = currHouseData;
         const { id: roomId } = currRoomData;
+        this.jumpAddDevicePage(houseId,selectedGateway,roomId);
+    },
+    jumpAddDevicePage(houseId,selectedGateway,roomId) {
         wx.navigateTo({
             url: `/pages/addDevice/addDevice?houseId=${houseId}&gatewayId=${selectedGateway}&roomId=${roomId}`
         })
     },
     // 取消选择网关
-    // onCancelSelectGateway() {
-    //     Toast(`必须为当前房子选择一个网关`);
-    // }
+    onCancelSelectGateway() {
+        Toast(`必须为当前房子选择一个网关`);
+    }
 });
