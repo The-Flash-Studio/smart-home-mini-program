@@ -11,7 +11,7 @@ App({
         isSocketConnect: false,
         loginCheckTime: 120000,
         url: "wss://api.koudaibook.com/smart-iot/webSocket/",
-        // url: "wss://10.32.33.151:5388/smart-iot/webSocket/",
+        // url: "ws://10.38.225.231:5388/smart-iot/webSocket/",
         callback: function () { },
         clientTimer: null,
         heartTimer: null,

@@ -130,7 +130,7 @@ Page({
     //   (error) => {
     //     console.log("getDeviceStatus error" + error);
     //   });
-    getDeviceSupportAttribute(122, (data) => {
+    getDeviceSupportAttribute(deviceId, (data) => {
         console.log("getDeviceSupportAttribute " + data.deviceId)
         if (data.statusCluster && data.statusCluster.length > 0) {
           this.setData({
