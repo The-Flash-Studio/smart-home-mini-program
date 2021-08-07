@@ -9,10 +9,7 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#ffffff00",
-    "navigationBarTitleText": "智能家庭",
-    "navigationBarTextStyle": "white",
-    "navigationStyle": "custom"
+    "navigationBarTitleText": "智能家庭"
   },
   "tabBar": {
     "list": [
