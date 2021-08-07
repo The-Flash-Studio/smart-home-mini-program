@@ -6,8 +6,8 @@ import commonRequestFunction from "./index"
  * @param {*} successCallback 
  * @param {*} failCallback 
  */
-export function addDevice(params,successCallback, failCallback) {
-  commonRequestFunction('smart-iot/gateway/addDevice',params, successCallback, failCallback)
+export function addDevice(params, successCallback, failCallback) {
+  commonRequestFunction('smart-iot/gateway/addDevice', params, successCallback, failCallback)
 }
 /**
  * 进入准备配对状态，socket接收消息
@@ -32,7 +32,7 @@ export function openDevicePairing(params, successCallback, failCallback) {
  * @param {*} failCallback 
  */
 export function removeGateway(gatewayId, successCallback, failCallback) {
-  commonRequestFunction('smart-iot/gateway/remove', { gatewayId }, successCallback, failCallback)
+  commonRequestFunction('smart-iot/gateway/remove', gatewayId, successCallback, failCallback)
 }
 /**
  * 查询房子的网关列表
@@ -41,7 +41,9 @@ export function removeGateway(gatewayId, successCallback, failCallback) {
  * @param {*} failCallback 
  */
 export function queryGateWaryByHouseId(houseId, successCallback, failCallback) {
-  commonRequestFunction('smart-iot/gateway/queryGatewaysByHouseId', { id:houseId }, successCallback, failCallback)
+  commonRequestFunction('smart-iot/gateway/queryGatewaysByHouseId', {
+    id: houseId
+  }, successCallback, failCallback)
 }
 
 /**
@@ -51,7 +53,9 @@ export function queryGateWaryByHouseId(houseId, successCallback, failCallback) {
  * @param {*} failCallback 
  */
 export function queryGatewayById(gatewayId, successCallback, failCallback) {
-  commonRequestFunction('smart-iot/gateway/findById', { gatewayId }, successCallback, failCallback)
+  commonRequestFunction('smart-iot/gateway/findById', {
+    id: gatewayId
+  }, successCallback, failCallback)
 }
 /**
  * 添加网关
@@ -70,7 +74,7 @@ export function addGateWay(requestObj = {}, successCallback, failCallback) {
  * @param {*} failCallback 
  */
 export function queryDevicesByGatewayId(id, successCallback, failCallback) {
-  commonRequestFunction('smart-iot/gateway/queryDevicesByGatewayId', { id: 30 }, successCallback, failCallback)
+  commonRequestFunction('smart-iot/gateway/queryDevicesByGatewayId', id, successCallback, failCallback)
 }
 
 /**

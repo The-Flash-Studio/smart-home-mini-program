@@ -11,7 +11,7 @@ App({
         isSocketConnect: false,
         loginCheckTime: 120000,
         url: "wss://api.koudaibook.com/smart-iot/webSocket/",
-        // url: "wss://10.32.33.151:5388/smart-iot/webSocket/",
+        // url: "ws://10.38.225.231:5388/smart-iot/webSocket/",
         callback: function () { },
         clientTimer: null,
         heartTimer: null,
@@ -77,7 +77,8 @@ App({
         })
         wx.onSocketMessage((res) => {
             console.log("App onSocketMessage : ", res)
-            that.socketInfo.callback(res.data)
+
+            that.socketInfo.callback(res.data.replace('已收到',''))
         })
     },
 

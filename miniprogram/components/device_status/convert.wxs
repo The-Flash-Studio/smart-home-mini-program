@@ -31,6 +31,27 @@ var convert = {
 
     return minVal + linkChar + maxVal + " " + valueUnit
   },
+  parseValueToShow: function (clusterAttribute) {
+    console.log("parseValueToShow 1-> ", clusterAttribute)
+    if (!clusterAttribute) return '';
+    console.log("parseValueToShow 2 -> ", clusterAttribute)
+    var valueType = clusterAttribute.valueType;
+    if (valueType === "text" || valueType === "number") {
+      return clusterAttribute.clusterValue
+    }
+    var valueArray = JSON.parse(clusterAttribute.valueRange)
+    if (!valueArray) return '';
+
+    var valueString = ''
+    for (var i = 0; i < valueArray.length; ++i) {
+      var value = valueArray[i]
+      if (value.key === clusterAttribute.clusterValue) {
+        valueString = value.val;
+      }
+    }
+
+    return valueString
+  }
 }
 
 module.exports = {
