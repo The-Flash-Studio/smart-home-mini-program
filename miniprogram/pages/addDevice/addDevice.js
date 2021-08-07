@@ -62,13 +62,17 @@ Page({
       nickName: this.data.nickName,
       deviceId:this.data.deviceId,
     }, (data) => {
-      Dialog.confirm({
+      Dialog.alert({
         title: '提示',
         message: '添加设备成功',
+      }).then(() => {
+        wx.navigateBack();
       })
-    }, (error) => {  Dialog.confirm({
+    }, (error) => {  Dialog.alert({
       title: '提示',
       message: '添加设备失败',
+    }).then(() => {
+      wx.navigateBack();
     }) })
   },
   bindKeyInput: function (e) {

@@ -25,12 +25,6 @@
           "scene": null
         },
         {
-          "name": "pages/addDevice/addDevice",
-          "pathName": "pages/addDevice/addDevice",
-          "query": "",
-          "scene": null
-        },
-        {
           "name": "首页",
           "pathName": "pages/index/index",
           "query": "",
@@ -38,6 +32,12 @@
         },
         {
           "name": "添加设备",
+          "pathName": "pages/addDevice/addDevice",
+          "query": "houseId=24&gatewayId=30&roomId=22",
+          "scene": null
+        },
+        {
+          "name": "pages/addDevice/addDevice",
           "pathName": "pages/addDevice/addDevice",
           "query": "houseId=24&gatewayId=30&roomId=22",
           "scene": null
