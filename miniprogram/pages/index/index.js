@@ -29,7 +29,8 @@ Page({
         houseIndexRadio: 0,
         managementComConfig: null,
         settingComConfig: null,
-        showConfirmBtn: false
+        showConfirmBtn: false,
+        selectRoomIdx:0,
     },
     onLoad: function () {
         this.fetchData()
@@ -86,7 +87,7 @@ Page({
                 const { roomList = [] } = e;
                 const currRoomData = roomList.length > 0 ? roomList[0] : {};
                 // console.log('--- 当前房间 ---', currRoomData)
-                const { id: roomId } = currRoomData
+                const { id: roomId } = currRoomData;
 
                 _this.setData({
                     currRoomData,
@@ -116,6 +117,10 @@ Page({
         const { id } = changedHouseInfo;
         this.fetchData(id);
         this.onPopupClose()
+
+        this.setData({
+            selectRoomIdx:0,
+        })
     },
 
     // 切换房间
@@ -123,6 +128,9 @@ Page({
         const _this = this;
         const { index = 0 } = e.detail;
         const { id: roomId } = this.data.roomList[index]
+        this.setData({
+            selectRoomIdx:index,
+        })
         // 获取当前房间的设备列表
         findDevicesByRoomId(roomId, (e) => {
             const devicesList = e;
@@ -166,11 +174,10 @@ Page({
     // 添加设备
     addDevice: function (e) {
         const _this = this;
-        const { currHouseData = {}, currRoomData = {} } = this.data;
+        const { currHouseData = {}, currRoomData = {},roomList,selectRoomIdx } = this.data;
         const { id: houseId, gatewayId = [] } = currHouseData;
-        const { id: roomId } = currRoomData;
+        const { id: roomId } = roomList[selectRoomIdx]
         queryGateWaryByHouseId(houseId, (responseData) => {
-            console.log('responseData>>>>>>: ', responseData);
             const { gatewayList = [] } = responseData;
             if (!gatewayList.length) {
                 // 关联网关
