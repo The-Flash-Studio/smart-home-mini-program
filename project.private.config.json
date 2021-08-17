@@ -41,6 +41,12 @@
           "pathName": "pages/addDevice/addDevice",
           "query": "houseId=24&gatewayId=30&roomId=22",
           "scene": null
+        },
+        {
+          "name": "pages/houseQrCode/houseQrCode",
+          "pathName": "pages/houseQrCode/houseQrCode",
+          "query": "houseId=24",
+          "scene": null
         }
       ]
     }

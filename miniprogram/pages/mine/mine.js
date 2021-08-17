@@ -1,4 +1,6 @@
 const USER_INFO = "__userinfo__"
+import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
+
 Page({
   data: {
     userInfo: {},
@@ -7,12 +9,12 @@ Page({
   },
   onLoad() {
     const userInfo = wx.getStorageSync(USER_INFO);
-    if(userInfo){
-       this.setData({
+    if (userInfo) {
+      this.setData({
         userInfo: JSON.parse(userInfo),
         hasUserInfo: true
       })
-    }else{
+    } else {
       if (wx.getUserProfile) {
         this.setData({
           canIUseGetUserProfile: true
@@ -41,4 +43,13 @@ Page({
       hasUserInfo: true
     })
   },
+  bindHouse() {
+    wx.scanCode({
+      success(res) {
+        // wx.navigateTo({
+        //   url: `/pages/addDevice/addDevice`
+        // })       
+      }
+    })
+  }
 })

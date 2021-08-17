@@ -8,6 +8,7 @@ import { queryGateWaryByHouseId } from "../../api/gatewayApi";
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
+
 Page({
     data: {
         gatewayList: [],
@@ -171,6 +172,14 @@ Page({
 
     },
 
+    // 
+    showRoomCode(){
+        const { currHouseData = {}, currRoomData = {} } = this.data;
+        const { id: houseId } = currHouseData;
+        wx.navigateTo({
+            url: `/pages/houseQrCode/houseQrCode?houseId=${houseId}`
+        })
+    },
     // 添加设备
     addDevice: function (e) {
         const _this = this;

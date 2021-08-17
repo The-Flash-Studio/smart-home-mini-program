@@ -8,6 +8,11 @@
           <van-icon name="plus" size="12" color="#999"/>
           <text class="management_add_text">{{type === 'house' ? '添加房子' : '添加房间'}}</text>
         </view>
+        <view class="flex_row_start_center management_add" bindtap="onOverlayOpen" data-overlaycontent="add">
+          <van-icon name="wap-home-o" />
+          <text wx:if="{{type === 'house'}}" class="management_add_text" catchtap="showRoomCode">房间码</text>
+        </view>
+ 
       </view>
       <!-- List -->
       <van-radio-group value="{{radioId}}">
@@ -25,6 +30,7 @@
         <view wx:if="{{type === 'house'}}" class="management_button" style="background-color:#1889FA" bindtap="onPopupOpen" data-popupContent="roomSetting">房间信息</view>
         <view class="management_button" style="background-color:#0FC160" bindtap="onOverlayOpen" data-type="{{type}}" data-overlaycontent="update">修改</view>
         <view class="management_button" style="background-color:#EE0824" bindtap="deleteHouseOrRoom">删除</view>
+
       </view>
     </view>
 </template>

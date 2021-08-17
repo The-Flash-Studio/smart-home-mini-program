@@ -23,5 +23,11 @@
         <view class="item_con_left">性别</view>
         <view class="item_con_right">{{userInfo.gender == 1 ? "男" : "女"}}</view>
     </view>
+    <view class="item_con">
+        <view class="item_con_left">添加房间</view>
+        <view class="item_con_right" bind:tap="bindHouse">
+            <van-icon name="plus" />去添加
+        </view>
+    </view>
     </block>
 </view>
