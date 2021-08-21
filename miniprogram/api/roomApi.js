@@ -15,6 +15,11 @@ export function removeRoom(roomId, successCallback, failCallback) {
   commonRequestFunction('smart-iot/room/remove', { id:roomId }, successCallback, failCallback)
 }
 
+export function addHouseOwner(houseId, successCallback, failCallback) {
+  commonRequestFunction('smart-iot/house/addHouseOwner', { id:houseId }, successCallback, failCallback)
+}
+
+
 /**
  * 根据roomID查询指定房间
  * 

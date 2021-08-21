@@ -32,7 +32,9 @@ export {
  * 通过wx.login获取code，换取自定义登录态
  */
 function wxLogin(loginSuccessCallBack) {
-  const loginException = () => { wx.showToast({ title: '用户登录异常', icon: 'error', duration: 2000 }) }
+  const loginException = () => { wx.showToast({ title: '用户登录异常LL', icon: 'error', duration: 2000 }) }
+
+  
   wx.login({
     success: function (res) {
       const userCode = res.code;
@@ -45,7 +47,9 @@ function wxLogin(loginSuccessCallBack) {
           if(token) {
             wx.setStorageSync(TOKEN_NAME, token)
             loginSuccessCallBack(true, token);
-          }else loginException();
+          }else{
+            loginException();
+          } 
         },
         fail(error) {
           console.log('error: ', error);

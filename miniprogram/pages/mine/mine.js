@@ -1,5 +1,9 @@
 const USER_INFO = "__userinfo__"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
+
+import { addHouseOwner } from '../../api/roomApi'
+
 
 Page({
   data: {
@@ -45,10 +49,15 @@ Page({
   },
   bindHouse() {
     wx.scanCode({
-      success(res) {
-        // wx.navigateTo({
-        //   url: `/pages/addDevice/addDevice`
-        // })       
+      success(houseId) {
+        addHouseOwner(houseId,()=>{
+          Toast.success(`添加成功`);          
+        },()=>{
+          Toast.fail('关联网关失败');
+        })    
+      },
+      fail:(error)=>{
+        Toast.fail(error);
       }
     })
   }

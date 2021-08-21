@@ -1,4 +1,5 @@
 <view class="userinfo_con">
+    <van-toast id="van-toast" />
     <block wx:if="{{!hasUserInfo}}">
         <view class="grant_con_wrap">
             <view class="grant_con">
